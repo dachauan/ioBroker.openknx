@@ -1,0 +1,80 @@
+{
+  "name": "iobroker.openknx",
+  "version": "0.0.18",
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.5.1",
+    "binary-parser": "^1.1.5",
+    "binary-protocol": "^0.0.0",
+    "fs": "^0.0.2",
+    "ipaddr.js": "1.2.0",
+    "ipv4.js": "^0.0.2",
+    "machina": "^2.0.0-1",
+    "similarity": "^1.1.0",
+    "underscore": "^1.8.3",
+    "xml2js": "^0.4.17",
+    "xml2js-xpath": "^0.7.0",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.23",
+    "knx": "2.4.1"
+  },
+  "deprecated": false,
+  "description": "ioBroker knx Adapter",
+  "devDependencies": {
+    "@alcalzone/release-script": "^2.2.1",
+    "@iobroker/testing": "^2.5.2",
+    "@types/chai": "^4.2.22",
+    "@types/chai-as-promised": "^7.1.4",
+    "@types/gulp": "^4.0.9",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.17.32",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^10.0.6",
+    "@types/sinon-chai": "^3.2.5",
+    "axios": "^0.24.0",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^8.1.0",
+    "gulp": "^4.0.2",
+    "mocha": "^9.1.3",
+    "proxyquire": "^2.1.3",
+    "sinon": "^11.1.2",
+    "sinon-chai": "^3.7.0",
+    "typescript": "~4.4.4"
+  },
+  "homepage": "https://github.com/ioBroker/ioBroker.openknx",
+  "keywords": [
+    "ioBroker",
+    "knx",
+    "Smart Home",
+    "home automation"
+  ],
+  "licenses": [
+    {
+      "type": "CC-BY-NC-4.0",
+      "url": "https://github.com/ioBroker/ioBroker.openknx/blob/master/LICENSE.txt"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boellner/ioBroker.openknx.git"
+  },
+  "scripts": {
+    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:js && npm run test:package",
+    "check": "tsc --noEmit -p tsconfig.check.json",
+    "lint": "eslint",
+    "release": "release-script"
+  },
+  "bugs": {
+    "url": "https://github.com/Boellner/ioBroker.openknx/issues"
+  },
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "boellner",
+  "license": "ISC"
+}
