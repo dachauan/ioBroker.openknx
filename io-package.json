@@ -1,80 +1,79 @@
 {
   "common": {
-        "name": "openknx",
-        "version": "0.0.18",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            }
-        },
-        "title": "Open KNX",
-        "titleLang": {
-            "en": "Open KNX",
-            "de": "Open KNX",
-            "ru": "Open KNX",
-            "pt": "Open KNX",
-            "nl": "Open KNX",
-            "fr": "Open KNX",
-            "it": "Open KNX",
-            "es": "Open KNX",
-            "pl": "Open KNX",
-            "zh-cn": "Open KNX"
-        },
-        "desc": {
-            "en": "open source KNX adapter",
-            "de": "Open-Source-KNX-Adapter",
-            "ru": "адаптер KNX с открытым исходным кодом",
-            "pt": "adaptador KNX de código aberto",
-            "nl": "open source KNX-adapter",
-            "fr": "adaptateur KNX open source",
-            "it": "adattatore KNX open source",
-            "es": "adaptador KNX de código abierto",
-            "pl": "otwarty adapter KNX",
-            "zh-cn": "开源 KNX 适配器"
-        },
-        "authors": [
-            "Boellner <boellnerboellner@gmail.com>"
-        ],
-        "keywords": [
-            "knx free open source eib"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "openknx.png",
-        "enabled": true,
-        "messagebox": true,
-        "subscribe": "messagebox",
-        "extIcon": "https://raw.githubusercontent.com/Boellner/ioBroker.openknx/main/admin/openknx.png",
-        "readme": "https://github.com/Boellner/ioBroker.openknx/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "protocols",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ],
+    "name": "openknx",
+    "version": "0.1.1",
+    "news": {
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "首次出版"
+      }
+    },
+    "title": "Open KNX",
+    "titleLang": {
+      "en": "Open KNX",
+      "de": "Open KNX",
+      "ru": "Open KNX",
+      "pt": "Open KNX",
+      "nl": "Open KNX",
+      "fr": "Open KNX",
+      "it": "Open KNX",
+      "es": "Open KNX",
+      "pl": "Open KNX",
+      "zh-cn": "Open KNX"
+    },
+    "desc": {
+      "en": "open source KNX adapter",
+      "de": "Open-Source-KNX-Adapter",
+      "ru": "адаптер KNX с открытым исходным кодом",
+      "pt": "adaptador KNX de código aberto",
+      "nl": "open source KNX-adapter",
+      "fr": "adaptateur KNX open source",
+      "it": "adattatore KNX open source",
+      "es": "adaptador KNX de código abierto",
+      "pl": "otwarty adapter KNX",
+      "zh-cn": "开源 KNX 适配器"
+    },
+    "authors": [
+      "Boellner <boellnerboellner@gmail.com>"
+    ],
+    "keywords": [
+      "knx free open source eib"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "openknx.png",
+    "enabled": true,
+    "messagebox": true,
+    "subscribe": "messagebox",
+    "extIcon": "https://raw.githubusercontent.com/Boellner/ioBroker.openknx/main/admin/openknx.png",
+    "readme": "https://github.com/Boellner/ioBroker.openknx/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "protocols",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ],
     "restartAdapters": [
       "openknx"
-    ]
+    ],
+    "installedFrom": "iobroker.openknx"
   },
-  "native": {
-
-  },
+  "native": {},
   "objects": [],
   "instanceObjects": [
     {

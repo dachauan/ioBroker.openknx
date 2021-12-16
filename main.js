@@ -128,13 +128,13 @@ class openknx extends utils.Adapter {
             //if user setting Add only new Objects write only new objects
             //https://www.iobroker.net/docu/index-81.htm?page_id=5809&lang=en#extendObject
             this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
-                this.log.debug('store Object ' + objects[index]._id + ' ' + (err ? ' ' + err : ''));
+                if (err) this.log.warn('error store Object ' + objects[index]._id + ' ' + (err ? ' ' + err : ''));
                 setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
             });
         } else {
             //setObjet to overwrite all existing settings, defalut
             this.setForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
-                this.log.debug('store Object ' + objects[index]._id + (err ? ' ' + err : ''));
+                if (err) this.log.warn('error store Object ' + objects[index]._id + (err ? ' ' + err : ''));
                 setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
             });
         }
@@ -275,7 +275,7 @@ class openknx extends utils.Adapter {
                                     var dp = new knx.Datapoint({
                                         ga: this.gaList.getDataById(key).native.address,
                                         dpt: this.gaList.getDataById(key).native.dpt,
-                                        autoread: this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
+                                        autoread: false //todo enable debug  this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
                                     }, this.knxConnection);
                                     this.gaList.setDpById(key, dp);
                                     cnt_withDPT++;
@@ -290,7 +290,7 @@ class openknx extends utils.Adapter {
                             cnt_complete++;
                         }
                         this.autoreaddone = true;
-                        this.log.info('Registered with ' + cnt_withDPT + ' KNX datapoints of ' + cnt_complete + ' datapoints in adapter.');
+                        this.log.info('Found ' + cnt_withDPT + ' valid KNX datapoints of ' + cnt_complete + ' datapoints in adapter.');
                     }
                     this.setState('info.connection', true, true);
                     this.log.info('Connected!');

@@ -1,6 +1,6 @@
 {
   "name": "iobroker.openknx",
-  "version": "0.0.18",
+  "version": "0.1.1",
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
     "binary-parser": "^1.1.5",
