@@ -213,6 +213,7 @@ Receiving will update the value of the iobroker object in read is set to true.
 ### 0.1.3
 * (boellner) feature: state roles now set to best match for some elements, default is state
 * (boellner) doc: corrected warwings reported by https://adapter-check.iobroker.in/
+* (boellner) fix: improve ui of admin dialog
 
 ### 0.1.2
 * (boellner) doc: initial test release

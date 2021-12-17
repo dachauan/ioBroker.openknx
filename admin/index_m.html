@@ -211,14 +211,12 @@
 
             //if not alive disable buttons
             getIsAdapterAlive(function (isAlive) {
-                if (isAlive || common.enabled) {
+                if (isAlive) {
                     $('#knxprojFile').change(fileHandler);
-                    $('#not-started').hide();
                 } else {
                     $('#knxprojFile').prop('disabled', true);
                     $('.file-field .btn').addClass('disabled');
                     $('.file-field .file-path').prop('disabled', true);
-                    $('#not-started').show();
                 }
             });
 
@@ -256,6 +254,7 @@
                 return false;
             }
 
+            $('#knxprojFile').prop('disabled', true);
             $('.file-field .btn').addClass('disabled');
             $('.file-field .file-path').prop('disabled', true);
 
@@ -271,24 +270,22 @@
                         $('#knxprojFile').change(fileHandler);
 
                         showToast(null, _('Please wait while importing Objects...'), null, 5000);
-                        $('#progress .determinate').removeClass('determinate').addClass('indeterminate');
+                        $('#progress').show();
                         $('#onlyAddNewObjects').addClass('disabled');
                         sendTo(null, 'import', { xml: event.target.result, onlyAddNewObjects: $('#onlyAddNewObjects').prop('checked') }, function (result) {
                             $('#onlyAddNewObjects').removeClass('disabled');
-                            $('.file-field .btn').removeClass('disabled');
-                            $('.file-field .file-path').prop('disabled', false);
-                            $('#progress').hide().find('.indeterminate').removeClass('indeterminate').addClass('determinate').css('width', '0%');
-
+                            $('#progress').hide();
                             if (!result || result.error) {
                                 showMessage(_('Error: ') + (result ? result.error : _('Unknown')));
                             } else {
                                 showMessage(_('Extracted %s states', result.count));
                                 sendTo(null, 'reset', null);
-
-                                //todo enable save button
-                                $('.file-field .btn').addClass('enabled');
-                                $('.file-field .file-path').prop('enabled', true);
                             }
+
+                            $('#knxprojFile').prop('disabled', true);
+                            $('.file-field .btn').addClass('disabled');
+                            $('.file-field .file-path').prop('disabled', true);
+
                         });
                     }
 
@@ -299,7 +296,7 @@
                 $('#onlyAddNewObjects').removeClass('disabled');
                 $('.file-field .btn').removeClass('disabled');
                 $('.file-field .file-path').prop('disabled', false);
-                $('#progress').hide().find('.indeterminate').removeClass('indeterminate').addClass('determinate').css('width', '0%');
+                $('#progress').hide();
             }
         }
 
@@ -358,32 +355,13 @@
             x.style.display = "block";
         }
 
-        /*
-        function showDebugDialog() {
-            disableAllDialogs();
-            $('.dialog-debug').addClass('tab-active');
-            var x = document.getElementById("debugDialog");
-            x.style.display = "block";
-        }
-        */
-
     </script>
 </head>
 
 <body>
     <!-- you have to put your config page in a div with id adapter-container -->
     <div class="m adapter-container">
-        <!--
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo"><img src="openknx.png" width="65" height="auto" alt="logo" /></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a onclick="showConfigDialog()" class="dialog-config c-tab translate">Configuration</a></li>
-                    <li><a onclick="showDebugDialog()" class="dialog-debug c-tab translate">Debug</a></li>
-                </ul>
-            </div>
-        </nav>
-        -->
+
         <div id="passwordModal" class="modal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -463,7 +441,7 @@
                             </div>
 
                             <div class="progress" id="progress">
-                                <div class="determinate" style="width: 70%"></div>
+                                <div class="indeterminate" style="width: 70%"></div>
                             </div>
                         </div>
                     </div>
@@ -471,29 +449,6 @@
             </div>
 
         </div>
-
-        <!--
-        <div id="debugDialog" class="dialog">
-            <div class="card">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="input-field col s12 m4 l2">
-                            <select id="debugLevel" class="value">
-                                <option value="1">Info</option>
-                                <option value="2">Debug less</option>
-                                <option value="3">Debug more</option>
-                                <option value="4">Debug most</option>
-                                <option value="5">Warn</option>
-                                <option value="6">Error</option>
-                            </select>
-                            <label for="debugLevel" class="translate">Debug - Level</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-
     </div>
 
 </body>

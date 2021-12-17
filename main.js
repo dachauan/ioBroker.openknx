@@ -127,12 +127,13 @@ class openknx extends utils.Adapter {
         if (onlyAddNewObjects) {
             //if user setting Add only new Objects write only new objects
             //https://www.iobroker.net/docu/index-81.htm?page_id=5809&lang=en#extendObject
-            this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
+            this.extendForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
+            //this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
                 if (err) this.log.warn('error store Object ' + objects[index]._id + ' ' + (err ? ' ' + err : ''));
                 setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
             });
         } else {
-            //setObjet to overwrite all existing settings, defalut
+            //setObjet to overwrite all existing settings, default
             this.setForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
                 if (err) this.log.warn('error store Object ' + objects[index]._id + (err ? ' ' + err : ''));
                 setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
