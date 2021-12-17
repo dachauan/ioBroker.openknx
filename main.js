@@ -359,7 +359,6 @@ class openknx extends utils.Adapter {
         });
     }
 
-    //todo: after override object path settings change load states again
     main() {
         this.log.info('Connecting to knx gateway:  ' + this.config.gwip + ":" + this.config.gwipport + '   with phy. Adr:  ' + this.config.eibadr + ' minimum send delay: ' + this.config.frameInterval);
         this.log.info(utils.controllerDir);
