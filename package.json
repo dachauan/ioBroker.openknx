@@ -2,7 +2,7 @@
   "name": "iobroker.openknx",
   "version": "0.1.3",
   "description": "ioBroker knx Adapter",
-   "author": "boellner",
+  "author": "boellner",
   "homepage": "https://github.com/boellner/ioBroker.openknx.git",
   "license": "GPL-3.0-only",
   "keywords": [

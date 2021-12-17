@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Paramètres d'adaptateur pour openknx",
-    "option1": "Option 1",
-    "option2": "Option 2"
+    "Check license": "Vérifier la licence",
+    "Configuration": "Configuration",
+    "Extracted %s states": "États %s extraits",
+    "File": "Télécharger le projet KNX",
+    "Frames per sec :": "Cadres par seconde:",
+    "Gateway IP :": "Passerelle IP",
+    "KNX adapter settings": "Paramètres de l'adaptateur KNX",
+    "License": "Licence",
+    "License:": "Clé de licence",
+    "Listen on all IPs": "Écoutez sur toutes les adresses IP",
+    "Options": "Options",
+    "Please wait while generating Objects...": "Veuillez patienter pendant la génération des objets ... cela pourrait prendre un moment.",
+    "Port :": "Port",
+    "Service is offline. Please try later.": "Le service est hors ligne ou pas disponible sur Internet. Veuillez réessayer plus tard ou vérifier la connexion Internet.",
+    "add only new Objects": "Ajouter uniquement de nouveaux objets",
+    "instruction": "Pour utiliser <b> knx </b>, vous devez obtenir la clé de licence. <br> <b> knx </b> est libre pour un usage privé, mais pour un usage commercial, il a un prix. <br> Vous peut obtenir la licence sur <a href='https://iobroker.net/accountLicenses' target='_blank'> iobroker.net </a> après une courte inscription.",
+    "knxproj - File": "",
+    "local network interface": "Interface de réseau local",
+    "password": "mot de passe",
+    "phys. EIB address": "Phys. Adresse EIB",
+    "socket_help": "Utilisé par des adaptateurs comme le pousse-pousse ou vis"
 }

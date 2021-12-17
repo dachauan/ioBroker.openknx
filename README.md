@@ -199,12 +199,8 @@ Receiving will update the value of the iobroker object in read is set to true.
 * Autoread
 * free open source
 
-
-
-
 # Known Problems
 - sends write instead of GroupValue_Response on GroupValue_Read
-- IOBroker object role definition missing
 
 # Limitations
 - only three level group addresses are supported

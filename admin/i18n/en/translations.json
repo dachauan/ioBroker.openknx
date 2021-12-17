@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Adapter settings for openknx",
-    "option1": "option1",
-    "option2": "option2"
+    "Check license": "Check license",
+    "Configuration": "Configuration",
+    "Extracted %s states": "Extracted %s states",
+    "File": "Upload KNX Project",
+    "Frames per sec :": "Frames per sec :",
+    "Gateway IP :": "Gateway IP",
+    "KNX adapter settings": "KNX adapter settings",
+    "License": "License",
+    "License:": "License key",
+    "Listen on all IPs": "Listen on all IPs",
+    "Options": "Options",
+    "Please wait while generating Objects...": "Please wait while generating Objects...",
+    "Port :": "Port",
+    "Service is offline. Please try later.": "Service is offline or no internet available. Please try later or check the internet connection.",
+    "add only new Objects": "Add only new Objects",
+    "instruction": "To use <b>knx</b>, you must get the license key for it.<br><b>knx</b> is free for private use, but for commercial use it has a price.<br>You can pay and get the license on <a href='https://iobroker.net/accountLicenses' target='_blank'>iobroker.net</a> after short registration.",
+    "knxproj - File": "GA XML-Import",
+    "local network interface": "Local network interface",
+    "password": "password",
+    "phys. EIB address": "Phys. EIB address",
+    "socket_help": "Used by adapters like rickshaw or vis"
 }

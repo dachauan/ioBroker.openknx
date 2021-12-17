@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Adapterinstellingen voor openknx",
-    "option1": "Optie 1",
-    "option2": "Optie 2"
+    "Check license": "Controleer licentie",
+    "Configuration": "Configuratie",
+    "Extracted %s states": "Geëxtrade %s toestanden",
+    "File": "Upload KNX-project",
+    "Frames per sec :": "Frames per seconde:",
+    "Gateway IP :": "Gateway IP",
+    "KNX adapter settings": "KNX-adapterinstellingen",
+    "License": "Licentie",
+    "License:": "Licentiesleutel",
+    "Listen on all IPs": "Luister op alle IP's",
+    "Options": "opties",
+    "Please wait while generating Objects...": "Even geduld met het genereren van objecten ... het kan even duren.",
+    "Port :": "Poort",
+    "Service is offline. Please try later.": "Service is offline of geen internet beschikbaar. Probeer het later opnieuw of controleer de internetverbinding.",
+    "add only new Objects": "Voeg alleen nieuwe objecten toe",
+    "instruction": "Als u <b> knx </b> wilt gebruiken, moet u hiervoor de licentiesleutel ophalen. <br> <b> knx </b> is gratis voor privégebruik, maar voor commercieel gebruik heeft het een prijs. <br> You kan de licentie krijgen op <a href='https://iobroker.net/accountLicenses' target='_blank'> iobroker.net </a> na een korte registratie.",
+    "knxproj - File": "",
+    "local network interface": "Lokale netwerkinterface",
+    "password": "wachtwoord",
+    "phys. EIB address": "Phys. EIB-adres",
+    "socket_help": "Gebruikt door adapters zoals riksja of vis"
 }

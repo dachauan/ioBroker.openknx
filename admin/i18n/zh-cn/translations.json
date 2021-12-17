@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "openknx的适配器设置",
-    "option1": "选项1",
-    "option2": "选项2"
+    "Check license": "",
+    "Configuration": "组态",
+    "Extracted %s states": "",
+    "File": "",
+    "Frames per sec :": "每秒帧数：",
+    "Gateway IP :": "",
+    "KNX adapter settings": "",
+    "License": "",
+    "License:": "",
+    "Listen on all IPs": "",
+    "Options": "",
+    "Please wait while generating Objects...": "",
+    "Port :": "",
+    "Service is offline. Please try later.": "",
+    "add only new Objects": "仅添加新对象",
+    "instruction": "",
+    "knxproj - File": "",
+    "local network interface": "本地网络接口",
+    "password": "密码",
+    "phys. EIB address": "",
+    "socket_help": ""
 }

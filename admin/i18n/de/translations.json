@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Adaptereinstellungen für openknx",
-    "option1": "Option 1",
-    "option2": "Option 2"
+    "Check license": "Lizenz prüfen",
+    "Configuration": "Konfiguration",
+    "Extracted %s states": "Es wurden %s Objekte extrahiert",
+    "File": "KNX Projekt Datei hochladen",
+    "Frames per sec :": "Pakete pro Sekunde:",
+    "Gateway IP :": "KNX Gateway IP",
+    "KNX adapter settings": "KNX Adaptereinstellungen",
+    "License": "Lizenz",
+    "License:": "License Key",
+    "Listen on all IPs": "Hören Sie auf allen IPs",
+    "Options": "Optionen",
+    "Please wait while generating Objects...": "Bitte warten Sie, während Sie Objekte erzeugen...",
+    "Port :": "Port",
+    "Service is offline. Please try later.": "Service ist momentan nicht erreichbar oder keine Internetverbindung vorhanden. Bitte versuchen Sie später noch ein mal oder prüfen Sie die Internetverbindung.",
+    "add only new Objects": "Füge nur neue Objekte hinzu",
+    "instruction": "Man braucht eine Lizenz um <b>knx</b> zu nutzen.<br><b>knx</b> ist kostenlos für die private Nutzung. Nur für den kommerziellen Gebrauch muss man eine kostenpflichtige Lizenz erwerben.<br>Man kann eine Lizenz auf <a href='https://iobroker.net/accountLicenses' target='_blank'>iobroker.net</a> nach der Registrierung bekommen.",
+    "knxproj - File": "GA XML-Import",
+    "local network interface": "Lokale Netzwerkschnittstelle",
+    "password": "Passwort",
+    "phys. EIB address": "Phys. EIB Adresse",
+    "socket_help": "Wird von Rickshaw oder Vis benutzt"
 }

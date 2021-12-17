@@ -67,8 +67,8 @@ class openknx extends utils.Adapter {
             // ...
             // clearInterval(interval1);
 
-            if (knxConnection) {
-                knxConnection.Disconnect();
+            if (this.knxConnection) {
+                this.knxConnection.Disconnect();
             }
 
             callback();
@@ -353,7 +353,7 @@ class openknx extends utils.Adapter {
                             break;
 
                         default:
-                            this.log.debug('received unhandeled event ', evt, src, dest, val);
+                            this.log.debug('received unhandeled event ' +' '+ evt +' '+ src +' '+ dest +' '+ val);
                     }
                 }
             }
@@ -361,7 +361,7 @@ class openknx extends utils.Adapter {
     }
 
     main() {
-        this.log.info('Connecting to knx gateway:  ' + this.config.gwip + ":" + this.config.gwipport + '   with phy. Adr:  ' + this.config.eibadr + ' minimum send delay: ' + this.config.frameInterval);
+        this.log.info('Connecting to knx gateway:  ' + this.config.gwip + ":" + this.config.gwipport + '   with phy. Adr: ' + this.config.eibadr + ' minimum send delay: ' + this.config.frameInterval);
         this.log.info(utils.controllerDir);
         this.setState('info.connection', false, true);
 

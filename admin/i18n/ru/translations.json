@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Настройки адаптера для openknx",
-    "option1": "Опция 1",
-    "option2": "option2"
+    "Check license": "Проверить лицензию",
+    "Configuration": "Конфигурация",
+    "Extracted %s states": "Извлечено %s объектов",
+    "File": "Загрузить проект KNX",
+    "Frames per sec :": "Пакетов в секунду:",
+    "Gateway IP :": "Gateway IP",
+    "KNX adapter settings": "KNX адаптер конфигурация",
+    "License": "Лицензия",
+    "License:": "Лицензионный ключ",
+    "Listen on all IPs": "Слушайте все IP-адреса",
+    "Options": "Опции",
+    "Please wait while generating Objects...": "Подождите, пока вы создадите объекты ..... это может занять некоторое время.",
+    "Port :": "Порт",
+    "Service is offline. Please try later.": "Сервис сейчас недоступен или нет интернет соединения. Попробуйте попозже или проверте интеренет соединение.",
+    "add only new Objects": "Добавлять только новые объекты",
+    "instruction": "Для пользования <b>knx</b> необходимо получить лицензионный ключ.<br><b>vis</b> бесплатен для личного использования в некоммерческих целях. Для использования <b>knx</b> в коммерческих целях необходимо заплатить за лицензию.<br>Лицензионный ключ можно получить здесь <a href='https://iobroker.net/accountLicenses' target='_blank'>iobroker.net</a> после регистрации.",
+    "knxproj - File": "",
+    "local network interface": "Интерфейс локальной сети",
+    "password": "Пароль",
+    "phys. EIB address": "Физический EIB адрес",
+    "socket_help": "Используется для Rickshaw или Vis"
 }

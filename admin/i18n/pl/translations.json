@@ -1,5 +1,23 @@
 {
-    "openknx adapter settings": "Ustawienia adaptera dla openknx",
-    "option1": "opcja 1",
-    "option2": "Opcja 2"
+    "Check license": "Sprawdź licencję",
+    "Configuration": "Konfiguracja",
+    "Extracted %s states": "Wyodrębnione stany %s",
+    "File": "Prześlij projekt KNX",
+    "Frames per sec :": "Klatki na sekundę:",
+    "Gateway IP :": "Adres IP bramy",
+    "KNX adapter settings": "Ustawienia adaptera KNX",
+    "License": "Licencja",
+    "License:": "Klucz licencyjny",
+    "Listen on all IPs": "Posłuchaj na wszystkich IP",
+    "Options": "Opcje",
+    "Please wait while generating Objects...": "Proszę poczekać na generowanie obiektów ..... może to chwilę potrwać.",
+    "Port :": "Port",
+    "Service is offline. Please try later.": "Usługa jest niedostępna lub nie ma dostępu do Internetu. Spróbuj później lub sprawdź połączenie internetowe.",
+    "add only new Objects": "Dodawaj tylko nowe obiekty",
+    "instruction": "Aby użyć <b>knx</b>, musisz uzyskać klucz licencyjny. <br> <b>knx</b> jest bezpłatny do użytku prywatnego, ale do użytku komercyjnego ma swoją cenę. może uzyskać licencję na <a href='https://iobroker.net/accountLicenses' target='_blank'> iobroker.net </a> po krótkiej rejestracji.",
+    "knxproj - File": "",
+    "local network interface": "Interfejs sieci lokalnej",
+    "password": "hasło",
+    "phys. EIB address": "Phys. Adres EIB",
+    "socket_help": "Używany przez adaptery takie jak riksza lub vis"
 }

@@ -70,18 +70,6 @@ systemDictionary = {
         "pl": "hasło",
         "zh-cn": "密码"
     },
-    "warning password protected": {
-        "en": "This projectfile is password protected. Please remove password via ETS, export the file and then do a new import into KNX-Adapter.",
-        "de": "Diese Projektdatei ist passwortgeschützt. Bitte entfernen Sie das Passwort über die ETS, exportieren Sie die Datei und importieren Sie sie erneut in den KNX-Adapter.",
-        "ru": "Этот файл проекта защищен паролем. Пожалуйста, удалите пароль через ETS, экспортируйте файл и затем выполните новый импорт в KNX-Adapter.",
-        "pt": "Este arquivo de projeto é protegido por senha. Remova a senha via ETS, exporte o arquivo e faça uma nova importação para o KNX-Adapter.",
-        "nl": "Dit projectbestand is beveiligd met een wachtwoord. Verwijder het wachtwoord via ETS, exporteer het bestand en voer een nieuwe import in de KNX-adapter uit.",
-        "fr": "Ce fichier de projet est protégé par mot de passe. Veuillez supprimer le mot de passe via ETS, exporter le fichier, puis effectuer une nouvelle importation dans l'adaptateur KNX.",
-        "it": "Questo file di progetto è protetto da password. Rimuovere la password tramite ETS, esportare il file e quindi eseguire una nuova importazione in KNX-Adapter.",
-        "es": "Este archivo de proyecto está protegido por contraseña. Elimine la contraseña a través de ETS, exporte el archivo y luego realice una nueva importación en KNX-Adapter.",
-        "pl": "Ten plik projektu jest chroniony hasłem. Usuń hasło za pomocą ETS, wyeksportuj plik, a następnie wykonaj nowy import do adaptera KNX.",
-        "zh-cn": "该项目文件受密码保护。请通过ETS删除密码，导出文件，然后重新导入KNX-Adapter。"
-    },
     "Service is offline. Please try later.": {
         "en": "Service is offline or no internet available. Please try later or check the internet connection.",
         "de": "Service ist momentan nicht erreichbar oder keine Internetverbindung vorhanden. Bitte versuchen Sie später noch ein mal oder prüfen Sie die Internetverbindung.",
@@ -190,18 +178,7 @@ systemDictionary = {
         "es": "Estados %s extraídos",
         "pl": "Wyodrębnione stany %s"
     },
-    "use true and false instead of numeric Values 0 and 1": {
-        "en": "use true and false instead of numeric Values 0 and 1",
-        "de": "TRUE und FALSE anstelle der numerischen Werte 0 und 1 verwenden",
-        "ru": "Использовать true и false вместо числовых значений 0 и 1",
-        "pt": "use true e false em vez de valores numéricos 0 e 1",
-        "nl": "gebruik waar en onwaar in plaats van numerieke waarden 0 en 1",
-        "fr": "utilisez true et false au lieu de valeurs numériques 0 et 1",
-        "it": "usa true e false anziché i valori numerici 0 e 1",
-        "es": "use verdadero y falso en lugar de valores numéricos 0 y 1",
-        "pl": "użyj wartości prawda i fałsz zamiast wartości liczbowych 0 i 1",
-        "zh-cn": "使用true和false而不是数值0和1"
-    },
+
     "Configuration": {
         "en": "Configuration",
         "de": "Konfiguration",
