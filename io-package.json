@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "openknx",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -47,7 +47,7 @@
     "keywords": [
       "knx free open source eib"
     ],
-    "license": "MIT",
+    "license": "GPLv3",
     "platform": "Javascript/Node.js",
     "main": "main.js",
     "icon": "openknx.png",
@@ -70,8 +70,7 @@
     ],
     "restartAdapters": [
       "openknx"
-    ],
-    "installedFrom": "iobroker.openknx"
+    ]
   },
   "native": {},
   "objects": [],
