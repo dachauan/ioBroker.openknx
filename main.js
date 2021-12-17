@@ -84,23 +84,17 @@ class openknx extends utils.Adapter {
             switch (obj.command) {
                 case 'import':
                     this.log.info('Project import...');
-                    projectImport.parseInput(obj.message.xml, obj.message.xml0, obj.message.knx_master, obj.message.file, (error, res) => {
-                        if (error) {
+                    projectImport.parseInput(obj.message.xml, obj.message.xml0, obj.message.knx_master, obj.message.file, (error1, res) => {
+                        if (error1) this.log.info('Project import error ' + error1);
+                        this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (error2, length) => {
                             res = {
-                                error: error
+                                error: error1 + ' ' + error2,
+                                count: length
                             };
-                            this.log.info('Project import error');
+                            if (error2) this.log.info('Project import error ' + error2);
+                            this.log.info('Project import finished of ' + length + ' GAs');
                             if (obj.callback) this.sendTo(obj.from, obj.command, res, obj.callback);
-                        } else {
-                            this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (error, length) => {
-                                res = {
-                                    error: error,
-                                    count: length
-                                };
-                                this.log.info('Project import finished of ' + length + ' GAs');
-                                if (obj.callback) this.sendTo(obj.from, obj.command, res, obj.callback);
-                            });
-                        }
+                        });
                     })
                     break;
                 case 'reset':
@@ -128,7 +122,7 @@ class openknx extends utils.Adapter {
             //if user setting Add only new Objects write only new objects
             //https://www.iobroker.net/docu/index-81.htm?page_id=5809&lang=en#extendObject
             this.extendForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
-            //this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
+                //this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
                 if (err) this.log.warn('error store Object ' + objects[index]._id + ' ' + (err ? ' ' + err : ''));
                 setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
             });
@@ -353,7 +347,7 @@ class openknx extends utils.Adapter {
                             break;
 
                         default:
-                            this.log.debug('received unhandeled event ' +' '+ evt +' '+ src +' '+ dest +' '+ val);
+                            this.log.debug('received unhandeled event ' + ' ' + evt + ' ' + src + ' ' + dest + ' ' + val);
                     }
                 }
             }

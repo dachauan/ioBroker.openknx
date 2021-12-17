@@ -210,6 +210,8 @@ Receiving will update the value of the iobroker object in read is set to true.
 * (boellner) feature: state roles now set to best match for some elements, default is state
 * (boellner) doc: corrected warwings reported by https://adapter-check.iobroker.in/
 * (boellner) fix: improve ui of admin dialog
+* (boellner) feature: exclude scene dtc (trigger) from autoread
+* (boellner) fix: project import, now continue to write iob objects in case of incorrect input file
 
 ### 0.1.2
 * (boellner) doc: initial test release
