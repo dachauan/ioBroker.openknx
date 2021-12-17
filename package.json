@@ -41,22 +41,17 @@
     "sinon-chai": "^3.7.0",
     "typescript": "~4.4.4"
   },
-  "homepage": "https://github.com/ioBroker/ioBroker.openknx",
+  "homepage": "https://github.com/boellner/ioBroker.openknx.git",
   "keywords": [
     "ioBroker",
     "knx",
     "Smart Home",
     "home automation"
   ],
-  "licenses": [
-    {
-      "type": "CC-BY-NC-4.0",
-      "url": "https://github.com/ioBroker/ioBroker.openknx/blob/master/LICENSE.txt"
-    }
-  ],
+  "license": "GNU GENERAL PUBLIC LICENSE v3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Boellner/ioBroker.openknx.git"
+    "url": "git+https://github.com/boellner/ioBroker.openknx.git"
   },
   "scripts": {
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
@@ -69,12 +64,11 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/Boellner/ioBroker.openknx/issues"
+    "url": "https://github.com/boellner/ioBroker.openknx/issues"
   },
   "main": "main.js",
   "directories": {
     "lib": "lib"
   },
-  "author": "boellner",
-  "license": "ISC"
+  "author": "boellner"
 }
