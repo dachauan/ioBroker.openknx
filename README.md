@@ -83,6 +83,10 @@ Enable expert mode to enable switching between different log levels. Default log
 
 GA import generates a communication object folder structure following the ga main-group/middle-group scheme. Each groupaddress is an oject with following automatically generated data.
 
+IoBroker state roles (https://github.com/ioBroker/ioBroker/blob/master/doc/STATE_ROLES.md) have value 'state' by default. Some more granular values are derieved from the DPT, for example Date or Switch.
+
+Autoread is set to false where it is clear from the DPT that this is a trigger signal. This applies to scene numbers.
+
     {
     "_id": "path.and.name.to.object",                       //derieved from the KNX structure
     "type": "state",
@@ -92,7 +96,7 @@ GA import generates a communication object folder structure following the ga mai
         "max": 1,                                           //derieved from dpt
         "name": "Aussen Melder Licht schalten",             //informative description from ets export
         "read": true,                                       //default set, if false incoming bus values are not updating the object
-        "role": "",                                         //tbd
+        "role": state,                                      //default state, derieved from DPT
         "type": "boolean",                                  //boolean, number, string, object, derieved from dpt
         "unit": "",                                         //derived from dpt
         "write": true                                       //default true, if set change on object is triggering knx write, succ. write sets then ack flag to true
@@ -100,7 +104,7 @@ GA import generates a communication object folder structure following the ga mai
     "native": {                                             //values here can be interpreted by openknx adapter
         "address": "0/0/7",                                 //knx address
         "answer_groupValueResponse": false,                 //default false, if set to true adapter responds with value on GroupValue_Read
-        "autoread": true,                                   //default true, adapter sends a GroupValue_read on start to sync its states
+        "autoread": true,                                   //default true for non trigger signals , adapter sends a GroupValue_read on start to sync its states
         "bitlength": 1,                                     //size ob knx data, derived from dpt
         "dpt": "DPT1.001",                                  //DPT
         "encoding": {                                       //informative
