@@ -47,7 +47,7 @@
     "keywords": [
       "knx free open source eib"
     ],
-    "license": "GPLv3",
+    "license": "GPL-3.0-only",
     "platform": "Javascript/Node.js",
     "main": "main.js",
     "icon": "openknx.png",
