@@ -21,15 +21,16 @@ This is an early untested version. Please make a good backup of all your data be
 
 installation from shell
 
-    cd /opt/iobroker/node_modules  
+    cd /opt/iobroker/  
     npm i iobroker.openknx  
     iobroker add openknx  
-    npm i knx  
 
 updates
 
     npm i iobroker.openknx  
     iobroker upload openknx  
+
+Check the npm output for error logs. Stop the openknx adapter before update.
 
 # Adapter configuration
 ![settings](docs/pictures/setting.png)
@@ -210,6 +211,9 @@ Receiving will update the value of the iobroker object in read is set to true.
 - only three level group addresses are supported
 
 ## Changelog
+### 0.1.6
+* (boellner) fix: missing dependencies
+
 ### 0.1.5
 * (boellner) fix: remove default fallback ip settings from stack to get error message on missing configuration
 * (boellner) feature: corrected adapter status info.connection (green, yellow, red indicator)
