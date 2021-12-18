@@ -8,10 +8,10 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 
-var projectImport = require(__dirname + '/lib/projectImport');
+const projectImport = require(__dirname + '/lib/projectImport');
 
-var knx = require(__dirname + '/lib/knx'); //todo copy for the moment
-var _ = require('underscore');
+const knx = require(__dirname + '/lib/knx'); //todo copy for the moment
+const _ = require('underscore');
 const tools = require('./lib/tools.js');
 
 class openknx extends utils.Adapter {
@@ -86,7 +86,7 @@ class openknx extends utils.Adapter {
     // New message arrived. obj is array with current messages
     // triggered from admin page read in knx project
     onMessage(obj) {
-        if (typeof obj === "object") {
+        if (typeof obj === 'object') {
             switch (obj.command) {
                 case 'import':
                     this.log.info('Project import...');
@@ -162,7 +162,7 @@ class openknx extends utils.Adapter {
 
     //obj to string and date to number for iobroker, convert to object for knx
     convertType(val) {
-        var ret;
+        let ret;
         //convert, state value for iobroker to set has to be one of type "string", "number", "boolean" and not type "object"
         if (val instanceof Date) {
             //convert Date to number
@@ -189,7 +189,7 @@ class openknx extends utils.Adapter {
      * @param {ioBroker.State | null | undefined} state
      */
     async onStateChange(id, state) {
-        var isRaw = false;
+        let isRaw = false;
 
         if (!id) return;
         if (!state /*obj deleted*/ || typeof state !== 'object') return;
@@ -207,9 +207,9 @@ class openknx extends utils.Adapter {
             return;
         }
 
-        var dpt = this.gaList.getDataById(id).native.dpt;
-        var ga = this.gaList.getDataById(id).native.address;
-        var val = state.val;
+        let dpt = this.gaList.getDataById(id).native.dpt;
+        let ga = this.gaList.getDataById(id).native.address;
+        let val = state.val;
 
         //convert val into object for certain dpts
         if (tools.isDateDPT(dpt)) {
@@ -267,14 +267,14 @@ class openknx extends utils.Adapter {
                 connected: () => {
                     //create new knx datapoint and bind to connection
                     //in connected in order to have autoread work
-                    var cnt_complete = 0;
-                    var cnt_withDPT = 0;
+                    let cnt_complete = 0;
+                    let cnt_withDPT = 0;
                     if (!this.autoreaddone) {
                         //do autoread on start of adapter and not every connection
                         for (const key of this.gaList) {
                             if (this.gaList.getDataById(key).native.address.match(/\d*\/\d*\/\d*/) && this.gaList.getDataById(key).native.dpt) {
                                 try {
-                                    var dp = new knx.Datapoint({
+                                    let dp = new knx.Datapoint({
                                         ga: this.gaList.getDataById(key).native.address,
                                         dpt: this.gaList.getDataById(key).native.dpt,
                                         autoread: this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
@@ -304,7 +304,7 @@ class openknx extends utils.Adapter {
                 },
 
                 //KNX Bus event received
-                event: (evt, src, dest, val) => {
+                event: (/** @type {string} */ evt, /** @type {string} */ src, /** @type {string} */ dest, /** @type {string} */ val) => {
                     if (src == this.config.eibadr) {
                         //called by self, avoid loop
                         //console.log('receive self ga: ', dest);
@@ -317,7 +317,7 @@ class openknx extends utils.Adapter {
                         return;
                     }
 
-                    var val = tools.isStringDPT(this.gaList.getDataByAddress(dest).native.dpt) ?
+                    let convertedVal = tools.isStringDPT(this.gaList.getDataByAddress(dest).native.dpt) ?
                         this.gaList.getDpByAddress(dest).current_value :
                         this.convertType(this.gaList.getDpByAddress(dest).current_value);
 
@@ -337,24 +337,24 @@ class openknx extends utils.Adapter {
 
                         case 'GroupValue_Response':
                             this.setForeignState(this.gaList.getIdByAddress(dest), {
-                                val: val,
+                                val: convertedVal,
                                 ack: true,
                                 c: 'self'
                             });
-                            this.log.debug('Incoming GroupValue_Response from ' + src + ' to ' + '(' + dest + ') ' + this.gaList.getDataByAddress(dest).common.name + ': ' + val);
+                            this.log.debug('Incoming GroupValue_Response from ' + src + ' to ' + '(' + dest + ') ' + this.gaList.getDataByAddress(dest).common.name + ': ' + convertedVal);
                             break;
 
                         case 'GroupValue_Write':
                             this.setForeignState(this.gaList.getIdByAddress(dest), {
-                                val: val,
+                                val: convertedVal,
                                 ack: true,
                                 c: 'self'
                             });
-                            this.log.debug('Incoming GroupValue_Write ga: ' + dest + '  val: ' + val + ' dpt: ' + this.gaList.getDataByAddress(dest).native.dpt + ' to Object: ' + this.gaList.getIdByAddress(dest));
+                            this.log.debug('Incoming GroupValue_Write ga: ' + dest + '  val: ' + convertedVal + ' dpt: ' + this.gaList.getDataByAddress(dest).native.dpt + ' to Object: ' + this.gaList.getIdByAddress(dest));
                             break;
 
                         default:
-                            this.log.debug('received unhandeled event ' + ' ' + evt + ' ' + src + ' ' + dest + ' ' + val);
+                            this.log.debug('received unhandeled event ' + ' ' + evt + ' ' + src + ' ' + dest + ' ' + convertedVal);
                     }
                 }
             }
@@ -374,12 +374,13 @@ class openknx extends utils.Adapter {
         }, (err, res) => {
             if (err) {
                 this.log.error('Cannot get objects: ' + err);
-            } else {
-                for (var i = res.rows.length - 1; i >= 0; i--) {
-                    var id = res.rows[i].id;
-                    if (res.rows[i].value.native.address != undefined) {
+            } else if (res) {
+                for (let i = res.rows.length - 1; i >= 0; i--) {
+                    let id = res.rows[i].id;
+                    let value = res.rows[i].value;
+                    if (value && value.native.address != undefined) {
                         //add only elements from tree that are knx objects, identified by a group adress
-                        this.gaList.set(id, res.rows[i].value.native.address, res.rows[i].value);
+                        this.gaList.set(id, value.native.address, res.rows[i].value);
                     }
                 }
                 this.startKnxStack();
@@ -424,7 +425,7 @@ class DoubleKeyedMap {
     }
 
     //key value is id
-    [Symbol.iterator] = function () {
+    [Symbol.iterator] = () => {
         return {
             index: -1,
             data: this.data,
