@@ -277,6 +277,8 @@
                             $('#progress').hide();
                             if (!result || result.error) {
                                 showMessage(_('Error: ') + (result ? result.error : _('Unknown')));
+                                sendTo(null, 'reset', null);
+                                showToast(null, _('Restarting adapter...'), null, 10000);
                             } else {
                                 showMessage(_('Extracted %s states', result.count));
                                 sendTo(null, 'reset', null);

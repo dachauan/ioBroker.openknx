@@ -104,7 +104,7 @@ class openknx extends utils.Adapter {
                     })
                     break;
                 case 'reset':
-                    this.log.info('Restarting');
+                    this.log.info('Restarting...');
                     this.restart();
                     break;
                 default:
@@ -260,6 +260,7 @@ class openknx extends utils.Adapter {
             physAddr: this.config.eibadr,
             minimumDelay: this.config.frameInterval,
             //map set the log level for messsages printed on the console. This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
+            //log is written to console, not in IoB log
             loglevel: this.log.level == 'silly' ? 'trace' : this.log.level,
             //debug:
             handlers: {
@@ -299,7 +300,7 @@ class openknx extends utils.Adapter {
 
                 disconnected: () => {
                     this.setState('info.connection', false, true);
-                    this.log.info('Connection lost');
+                    this.log.warn('Connection lost');
                 },
 
                 //KNX Bus event received
