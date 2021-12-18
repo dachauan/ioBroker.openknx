@@ -12,3 +12,4 @@ todo.txt
 .vscode
 iob_npm.done
 package-lock.json
+tsconfig.json
