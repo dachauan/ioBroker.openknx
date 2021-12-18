@@ -45,9 +45,15 @@ class openknx extends utils.Adapter {
     async onReady() {
         // adapter initialization
 
+        //after installation
+        if (tools.isEmptyObject(this.config)) {
+            this.log.warn('Adapter configuration missing, please do configuration first.');
+            return;
+        }
+
+        //todo nach neuinstallation checken, ga import muss sofort gehen xxx
         if (this.config.adapterpath !== '')
             this.mynamespace = this.config.adapterpath;
-        //this.mynamespace = 'knx.0';
 
         // In order to get state updates, you need to subscribe to them. 
         this.subscribeForeignStates(this.mynamespace + '.*');
@@ -88,7 +94,7 @@ class openknx extends utils.Adapter {
                         if (error1) this.log.info('Project import error ' + error1);
                         this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (error2, length) => {
                             res = {
-                                error: error1 + ' ' + error2,
+                                error: error1 || error2,
                                 count: length
                             };
                             if (error2) this.log.info('Project import error ' + error2);
@@ -254,7 +260,7 @@ class openknx extends utils.Adapter {
             physAddr: this.config.eibadr,
             minimumDelay: this.config.frameInterval,
             //map set the log level for messsages printed on the console. This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
-            // loglevel: this.log.level == 'silly' ? 'trace' : this.log.level,
+            loglevel: this.log.level == 'silly' ? 'trace' : this.log.level,
             //debug:
             handlers: {
                 connected: () => {
@@ -270,7 +276,7 @@ class openknx extends utils.Adapter {
                                     var dp = new knx.Datapoint({
                                         ga: this.gaList.getDataById(key).native.address,
                                         dpt: this.gaList.getDataById(key).native.dpt,
-                                        autoread: false //todo enable debug  this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
+                                        autoread: this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
                                     }, this.knxConnection);
                                     this.gaList.setDpById(key, dp);
                                     cnt_withDPT++;
@@ -370,7 +376,10 @@ class openknx extends utils.Adapter {
             } else {
                 for (var i = res.rows.length - 1; i >= 0; i--) {
                     var id = res.rows[i].id;
-                    this.gaList.set(id, res.rows[i].value.native.address, res.rows[i].value);
+                    if (res.rows[i].value.native.address != undefined) {
+                        //add only elements from tree that are knx objects, identified by a group adress
+                        this.gaList.set(id, res.rows[i].value.native.address, res.rows[i].value);
+                    }
                 }
                 this.startKnxStack();
             }

@@ -210,11 +210,17 @@ Receiving will update the value of the iobroker object in read is set to true.
 - only three level group addresses are supported
 
 ## Changelog
+### 0.1.5
+* (boellner) fix: remove default fallback ip settings from stack to get error message on missing configuration
+* (boellner) feature: corrected adapter status info.connection (green, yellow, red indicator)
+* (boellner) fix: autoread
+* (boellner) fix: finding non knx objects int tree leading to problems on startup
+
 ### 0.1.3
 * (boellner) feature: state roles now set to best match for some elements, default is state
+* (boellner) feature: exclude scene dtc (trigger) from autoread
 * (boellner) doc: corrected warwings reported by https://adapter-check.iobroker.in/
 * (boellner) fix: improve ui of admin dialog
-* (boellner) feature: exclude scene dtc (trigger) from autoread
 * (boellner) fix: project import, now continue to write iob objects in case of incorrect input file
 
 ### 0.1.2

@@ -11,3 +11,4 @@ appveyor.yml
 todo.txt
 .vscode
 iob_npm.done
+package-lock.json

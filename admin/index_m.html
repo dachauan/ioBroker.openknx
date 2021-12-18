@@ -269,7 +269,7 @@
                         $('#knxprojFile').replaceWith($(knxprojFile));
                         $('#knxprojFile').change(fileHandler);
 
-                        showToast(null, _('Please wait while importing Objects...'), null, 5000);
+                        showToast(null, _('Import started...'), null, 3000);
                         $('#progress').show();
                         $('#onlyAddNewObjects').addClass('disabled');
                         sendTo(null, 'import', { xml: event.target.result, onlyAddNewObjects: $('#onlyAddNewObjects').prop('checked') }, function (result) {
@@ -280,6 +280,7 @@
                             } else {
                                 showMessage(_('Extracted %s states', result.count));
                                 sendTo(null, 'reset', null);
+                                showToast(null, _('Restarting adapter...'), null, 10000);
                             }
 
                             $('#knxprojFile').prop('disabled', true);
@@ -301,8 +302,6 @@
         }
 
         function checkIPs(ip1, ip2) {
-            // normally it must be calculated the common subnet mask and applyed to both ip addresses, if result is the same => ok
-            // I will check only 2 first numbers of ipV4
             var i1 = ip1.split('.');
             var i2 = ip2.split('.');
             // If ipv6 or DNS name

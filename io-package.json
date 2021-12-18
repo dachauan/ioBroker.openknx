@@ -1,10 +1,10 @@
 {
   "common": {
     "name": "openknx",
-    "version": "0.1.3",
+    "version": "0.1.5",
     "news": {
-      "0.1.3": {
-        "en": "Test Release"
+      "0.1.5": {
+        "en": "Test Release, bugfixing"
       }
     },
     "title": "Open KNX",
