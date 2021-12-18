@@ -211,6 +211,9 @@ Receiving will update the value of the iobroker object in read is set to true.
 - only three level group addresses are supported
 
 ## Changelog
+### 0.1.7
+* (boellner) 
+
 ### 0.1.6
 * (boellner) fix: missing dependencies
 
