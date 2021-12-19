@@ -1,6 +1,6 @@
 {
   "name": "iobroker.openknx",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "ioBroker knx Adapter",
   "author": "boellner",
   "homepage": "https://github.com/boellner/ioBroker.openknx.git",
@@ -16,7 +16,6 @@
     "url": "https://github.com/boellner/ioBroker.openknx"
   },
   "dependencies_unused": {
-    "@iobroker/adapter-core": "^2.5.1",
     "binary-parser": "^1.1.5",
     "binary-protocol": "^0.0.0",
     "fs": "^0.0.2",
@@ -30,7 +29,6 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
     "knx": "2.4.1",
-    "release-script": "^1.0.2",
     "underscore": "^1.8.3",
     "xmldom": "^0.1.27",
     "xpath": "0.0.23"
@@ -73,6 +71,7 @@
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
+    "test:mytest": "mocha test/test --exit",
     "check": "tsc --noEmit -p tsconfig.check.json",
     "lint": "eslint",
     "release": "release-script"

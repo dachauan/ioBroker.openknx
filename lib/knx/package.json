@@ -85,8 +85,8 @@
   "deprecated": false,
   "description": "KNXnet/IP protocol implementation for Node(>=4.x)",
   "devDependencies": {
-    "multi-tape": "^1.2.1",
-    "tape": "^4.10.1"
+    "multi-tape": "^1.6.1",
+    "tape": "^4.14.0"
   },
   "engines": {
     "node": ">=6"

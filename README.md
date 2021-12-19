@@ -211,15 +211,16 @@ Receiving will update the value of the iobroker object in read is set to true.
 - only three level group addresses are supported
 
 ## Changelog
-### 0.1.7
+### 0.1.8
+* (boellner) feature: skip wrong initial disconnect warning
 * (boellner) doc: github ci pipleline, testing
 
 ### 0.1.6
 * (boellner) fix: missing dependencies
 
 ### 0.1.5
-* (boellner) fix: remove default fallback ip settings from stack to get error message on missing configuration
 * (boellner) feature: corrected adapter status info.connection (green, yellow, red indicator)
+* (boellner) fix: remove default fallback ip settings from stack to get error message on missing configuration
 * (boellner) fix: autoread
 * (boellner) fix: finding non knx objects int tree leading to problems on startup
 

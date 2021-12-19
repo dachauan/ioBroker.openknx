@@ -21,6 +21,8 @@ class openknx extends utils.Adapter {
 
     knxConnection;
     mynamespace;
+    /* knx stack starts connection process with disconnect msg*/
+    disconnectConfirmed = false;
 
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -73,6 +75,7 @@ class openknx extends utils.Adapter {
             // ...
             // clearInterval(interval1);
 
+            this.disconnectConfirmed = false;
             if (this.knxConnection) {
                 this.knxConnection.Disconnect();
             }
@@ -90,7 +93,7 @@ class openknx extends utils.Adapter {
             switch (obj.command) {
                 case 'import':
                     this.log.info('Project import...');
-                    projectImport.parseInput(obj.message.xml, obj.message.xml0, obj.message.knx_master, obj.message.file, (error1, res) => {
+                    projectImport.parseInput(obj.message.xml, (error1, res) => {
                         if (error1) this.log.info('Project import error ' + error1);
                         this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (error2, length) => {
                             res = {
@@ -209,41 +212,47 @@ class openknx extends utils.Adapter {
 
         let dpt = this.gaList.getDataById(id).native.dpt;
         let ga = this.gaList.getDataById(id).native.address;
-        let val = state.val;
+        let knxVal;
+        let rawVal;
 
         //convert val into object for certain dpts
         if (tools.isDateDPT(dpt)) {
             //before composite check, date is also composite
-            val = new Date(val);
+            knxVal = new Date(state.val);
         } else if (this.gaList.getDataById(id).native.valuetype == 'composite') {
             try {
-                val = JSON.parse(val);
+                knxVal = JSON.parse(state.val);
             } catch (e) {
                 this.log.warn('stateChange: unsupported value format ' + val + ' for ' + ga);
                 return;
             }
         } else if (tools.isStringDPT(dpt)) {
-            ; //val = this.convertType(val);
+            knxVal = state.val;
         } else if (tools.isUnknownDPT(dpt)) {
             //write raw buffers for unknown dpts, iterface is a hex value
             //bitlength is the buffers bytelength * 8.
-            val = Buffer.from(val, 'hex');
+            rawVal = Buffer.from(state.val, 'hex');
             isRaw = true;
             this.log.warn('Missing implementation for unhandeled DPT ' + dpt + ', assuming raw values');
-        } else {}
+        } else {
+            knxVal = state.val;
+        }
 
         if (state.c == 'GroupValue_Read') {
             //interface to trigger GrouValue_Read is this comment
-            this.log.debug('Outgoing GroupValue_Read to ' + ga + ' value ' + val);
+            this.log.debug('Outgoing GroupValue_Read to ' + ga + ' value ' + knxVal);
             this.knxConnection.read(ga);
             if (!state.ack) this.setForeignState(id, {
                 ack: true,
                 c: 'self'
             });
         } else if (this.gaList.getDataById(id).common.write) {
-            this.log.debug('Outgoing GroupValue_Write to ' + ga + ' value ' + val + ' from ' + id);
-            if (isRaw) this.knxConnection.writeRaw(ga, val);
-            else this.knxConnection.write(ga, val, dpt);
+            this.log.debug('Outgoing GroupValue_Write to ' + ga + ' value ' + (isRaw ? rawVal : knxVal) + ' from ' + id);
+            if (isRaw) {
+                this.knxConnection.writeRaw(ga, rawVal);
+            } else {
+                this.knxConnection.write(ga, knxVal, dpt);
+            }
             if (!state.ack) this.setForeignState(id, {
                 ack: true,
                 c: 'self'
@@ -265,6 +274,7 @@ class openknx extends utils.Adapter {
             //debug:
             handlers: {
                 connected: () => {
+                    this.disconnectConfirmed = false;
                     //create new knx datapoint and bind to connection
                     //in connected in order to have autoread work
                     let cnt_complete = 0;
@@ -300,11 +310,13 @@ class openknx extends utils.Adapter {
 
                 disconnected: () => {
                     this.setState('info.connection', false, true);
-                    this.log.warn('Connection lost');
+                    if (this.disconnectConfirmed)
+                        this.log.warn('Connection lost');
+                    this.disconnectConfirmed = true;
                 },
 
                 //KNX Bus event received
-                event: (/** @type {string} */ evt, /** @type {string} */ src, /** @type {string} */ dest, /** @type {string} */ val) => {
+                event: ( /** @type {string} */ evt, /** @type {string} */ src, /** @type {string} */ dest, /** @type {string} */ val) => {
                     if (src == this.config.eibadr) {
                         //called by self, avoid loop
                         //console.log('receive self ga: ', dest);
