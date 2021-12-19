@@ -71,7 +71,7 @@
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
-    "test:mytest": "mocha test/test --exit",
+    "test:myunittest": "mocha test/test --exit",
     "check": "tsc --noEmit -p tsconfig.check.json",
     "lint": "eslint",
     "release": "release-script"
