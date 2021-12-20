@@ -32,7 +32,8 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "curly": ["error", "all"]
     },
     "parserOptions": {
         "ecmaVersion": 2018

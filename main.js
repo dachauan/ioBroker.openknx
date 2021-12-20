@@ -8,22 +8,13 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 
-const projectImport = require(__dirname + '/lib/projectImport');
+const projectImport = require(__dirname + "/lib/projectImport");
 
-const knx = require(__dirname + '/lib/knx'); //todo copy for the moment
-const _ = require('underscore');
-const tools = require('./lib/tools.js');
+const knx = require(__dirname + "/lib/knx"); //todo copy for the moment
+const _ = require("underscore");
+const tools = require("./lib/tools.js");
 
 class openknx extends utils.Adapter {
-
-    gaList = new DoubleKeyedMap();
-    autoreaddone = false;
-
-    knxConnection;
-    mynamespace;
-    /* knx stack starts connection process with disconnect msg*/
-    disconnectConfirmed = false;
-
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
      */
@@ -32,9 +23,13 @@ class openknx extends utils.Adapter {
             ...options,
             name: "openknx",
         });
+        this.gaList = new DoubleKeyedMap();
+        this.autoreaddone = false;
+
+        /* knx stack starts connection process with disconnect msg*/
+        this.disconnectConfirmed = false;
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
-        //this.on("objectChange", this.onObjectChange.bind(this));
         this.on("message", this.onMessage.bind(this));
         this.on("unload", this.onUnload.bind(this));
 
@@ -49,16 +44,17 @@ class openknx extends utils.Adapter {
 
         //after installation
         if (tools.isEmptyObject(this.config)) {
-            this.log.warn('Adapter configuration missing, please do configuration first.');
+            this.log.warn("Adapter configuration missing, please do configuration first.");
             return;
         }
 
         //todo nach neuinstallation checken, ga import muss sofort gehen xxx
-        if (this.config.adapterpath !== '')
+        if (this.config.adapterpath !== "") {
             this.mynamespace = this.config.adapterpath;
+        }
 
-        // In order to get state updates, you need to subscribe to them. 
-        this.subscribeForeignStates(this.mynamespace + '.*');
+        // In order to get state updates, you need to subscribe to them.
+        this.subscribeForeignStates(this.mynamespace + ".*");
 
         this.main();
     }
@@ -89,29 +85,34 @@ class openknx extends utils.Adapter {
     // New message arrived. obj is array with current messages
     // triggered from admin page read in knx project
     onMessage(obj) {
-        if (typeof obj === 'object') {
+        if (typeof obj === "object") {
             switch (obj.command) {
-                case 'import':
-                    this.log.info('Project import...');
-                    projectImport.parseInput(obj.message.xml, (error1, res) => {
-                        if (error1) this.log.info('Project import error ' + error1);
-                        this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (error2, length) => {
+                case "import":
+                    this.log.info("Project import...");
+                    projectImport.parseInput(obj.message.xml, (parseError, res) => {
+                        if (parseError) {
+                            this.log.info("Project import error " + parseError);
+                        }
+                        this.updateObjects(res, 0, obj.message.onlyAddNewObjects, (updateError, length) => {
                             res = {
-                                error: error1 || error2,
-                                count: length
+                                error: parseError || updateError,
+                                count: length,
                             };
-                            if (error2) this.log.info('Project import error ' + error2);
-                            this.log.info('Project import finished of ' + length + ' GAs');
-                            if (obj.callback) this.sendTo(obj.from, obj.command, res, obj.callback);
+                            if (updateError) {
+                                this.log.info("Project import error " + updateError);
+                            }
+                            this.log.info("Project import finished of " + length + " GAs");
+                            if (obj.callback) {
+                                this.sendTo(obj.from, obj.command, res, obj.callback);
+                            }
                         });
-                    })
+                    });
                     break;
-                case 'reset':
-                    this.log.info('Restarting...');
+                case "reset":
+                    this.log.info("Restarting...");
                     this.restart();
-                    break;
                 default:
-                    this.log.warn('Unknown command: ' + obj.command);
+                    this.log.warn("Unknown command: " + obj.command);
                     break;
             }
         }
@@ -122,24 +123,29 @@ class openknx extends utils.Adapter {
     updateObjects(objects, index, onlyAddNewObjects, callback) {
         if (index >= objects.length) {
             //end of recursion reached
-            let err = this.warnDuplicates(objects);
-            if (typeof callback === 'function')
+            const err = this.warnDuplicates(objects);
+            if (typeof callback === "function") {
                 callback(err, objects.length);
+            }
             return;
         }
         if (onlyAddNewObjects) {
             //if user setting Add only new Objects write only new objects
             //https://www.iobroker.net/docu/index-81.htm?page_id=5809&lang=en#extendObject
-            this.extendForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
+            this.extendForeignObject(this.mynamespace + "." + objects[index]._id, objects[index], (err, obj) => {
                 //this.setForeignObjectNotExists(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
-                if (err) this.log.warn('error store Object ' + objects[index]._id + ' ' + (err ? ' ' + err : ''));
-                setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
+                if (err) {
+                    this.log.warn("error store Object " + objects[index]._id + " " + (err ? " " + err : ""));
+                }
+                setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback);
             });
         } else {
             //setObjet to overwrite all existing settings, default
-            this.setForeignObject(this.mynamespace + '.' + objects[index]._id, objects[index], (err, obj) => {
-                if (err) this.log.warn('error store Object ' + objects[index]._id + (err ? ' ' + err : ''));
-                setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback)
+            this.setForeignObject(this.mynamespace + "." + objects[index]._id, objects[index], (err, obj) => {
+                if (err) {
+                    this.log.warn("error store Object " + objects[index]._id + (err ? " " + err : ""));
+                }
+                setTimeout(this.updateObjects.bind(this), 0, objects, index + 1, onlyAddNewObjects, callback);
             });
         }
     }
@@ -148,19 +154,21 @@ class openknx extends utils.Adapter {
      * IOBroker Object tree cannot store 2 objects of same name, warn
      */
     warnDuplicates(objects) {
-        let arr = [];
-        let duplicates = [];
+        const arr = [];
+        const duplicates = [];
         for (const object of objects) {
             arr.push(object._id);
-        };
+        }
         const tempArray = [...arr].sort();
         for (let i = 0; i < tempArray.length; i++) {
             if (tempArray[i + 1] === tempArray[i]) {
                 duplicates.push(tempArray[i]);
             }
         }
-        if (duplicates.length) this.log.warn('Object with duplicate GroupAddress names not created: ' + duplicates);
-        return duplicates.length ? 'Duplicate GA names' : null;
+        if (duplicates.length) {
+            this.log.warn("Object with duplicate GroupAddress names not created: " + duplicates);
+        }
+        return duplicates.length ? "Duplicate GA names" : null;
     }
 
     //obj to string and date to number for iobroker, convert to object for knx
@@ -172,10 +180,10 @@ class openknx extends utils.Adapter {
             ret = Number(new Date(val));
         } else if (Buffer.isBuffer(val)) {
             //before object check
-            ret = val.toString('hex');
-        } else if (typeof val === 'object') {
+            ret = val.toString("hex");
+        } else if (typeof val === "object") {
             ret = JSON.stringify(val);
-        } else if (typeof val === 'string') {
+        } else if (typeof val === "string") {
             //use as is
         } else {
             //both can handle number and boolean
@@ -194,24 +202,30 @@ class openknx extends utils.Adapter {
     async onStateChange(id, state) {
         let isRaw = false;
 
-        if (!id) return;
-        if (!state /*obj deleted*/ || typeof state !== 'object') return;
+        if (!id) {
+            return;
+        }
+        if (!state /*obj deleted*/ || typeof state !== "object") {
+            return;
+        }
         //not a KNX object
-        if (!this.gaList.getDataById(id) || !this.gaList.getDataById(id).native || !this.gaList.getDataById(id).native.address) return;
-        if (!(await this.getStateAsync('info.connection'))) {
-            this.log.warn('onStateChange: not connected to KNX bus');
+        if (!this.gaList.getDataById(id) || !this.gaList.getDataById(id).native || !this.gaList.getDataById(id).native.address) {
+            return;
+        }
+        if (!(await this.getStateAsync("info.connection"))) {
+            this.log.warn("onStateChange: not connected to KNX bus");
             return;
         }
 
-        if (state.c == 'self') {
+        if (state.c == "self") {
             //called by self, avoid loop
             //console.log('state change self id: ' + id);
             //tools.interfaceTest(id, state);
             return;
         }
 
-        let dpt = this.gaList.getDataById(id).native.dpt;
-        let ga = this.gaList.getDataById(id).native.address;
+        const dpt = this.gaList.getDataById(id).native.dpt;
+        const ga = this.gaList.getDataById(id).native.address;
         let knxVal;
         let rawVal;
 
@@ -219,11 +233,11 @@ class openknx extends utils.Adapter {
         if (tools.isDateDPT(dpt)) {
             //before composite check, date is also composite
             knxVal = new Date(state.val);
-        } else if (this.gaList.getDataById(id).native.valuetype == 'composite') {
+        } else if (this.gaList.getDataById(id).native.valuetype == "composite") {
             try {
                 knxVal = JSON.parse(state.val);
             } catch (e) {
-                this.log.warn('stateChange: unsupported value format ' + val + ' for ' + ga);
+                this.log.warn("stateChange: unsupported value format " + state.val + " for " + ga);
                 return;
             }
         } else if (tools.isStringDPT(dpt)) {
@@ -231,34 +245,38 @@ class openknx extends utils.Adapter {
         } else if (tools.isUnknownDPT(dpt)) {
             //write raw buffers for unknown dpts, iterface is a hex value
             //bitlength is the buffers bytelength * 8.
-            rawVal = Buffer.from(state.val, 'hex');
+            rawVal = Buffer.from(state.val, "hex");
             isRaw = true;
-            this.log.warn('Missing implementation for unhandeled DPT ' + dpt + ', assuming raw values');
+            this.log.warn("Missing implementation for unhandeled DPT " + dpt + ", assuming raw values");
         } else {
             knxVal = state.val;
         }
 
-        if (state.c == 'GroupValue_Read') {
+        if (state.c == "GroupValue_Read") {
             //interface to trigger GrouValue_Read is this comment
-            this.log.debug('Outgoing GroupValue_Read to ' + ga + ' value ' + knxVal);
+            this.log.debug("Outgoing GroupValue_Read to " + ga + " value " + knxVal);
             this.knxConnection.read(ga);
-            if (!state.ack) this.setForeignState(id, {
-                ack: true,
-                c: 'self'
-            });
+            if (!state.ack) {
+                this.setForeignState(id, {
+                    ack: true,
+                    c: "self",
+                });
+            }
         } else if (this.gaList.getDataById(id).common.write) {
-            this.log.debug('Outgoing GroupValue_Write to ' + ga + ' value ' + (isRaw ? rawVal : knxVal) + ' from ' + id);
+            this.log.debug("Outgoing GroupValue_Write to " + ga + " value " + (isRaw ? rawVal : knxVal) + " from " + id);
             if (isRaw) {
                 this.knxConnection.writeRaw(ga, rawVal);
             } else {
                 this.knxConnection.write(ga, knxVal, dpt);
             }
-            if (!state.ack) this.setForeignState(id, {
-                ack: true,
-                c: 'self'
-            });
+            if (!state.ack) {
+                this.setForeignState(id, {
+                    ack: true,
+                    c: "self",
+                });
+            }
         } else {
-            this.log.warn('not configured write to ga: ' + val);
+            this.log.warn("not configured write to ga: " + state.val);
         }
     }
 
@@ -270,7 +288,7 @@ class openknx extends utils.Adapter {
             minimumDelay: this.config.frameInterval,
             //map set the log level for messsages printed on the console. This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
             //log is written to console, not in IoB log
-            loglevel: this.log.level == 'silly' ? 'trace' : this.log.level,
+            loglevel: this.log.level == "silly" ? "trace" : this.log.level,
             //debug:
             handlers: {
                 connected: () => {
@@ -284,39 +302,49 @@ class openknx extends utils.Adapter {
                         for (const key of this.gaList) {
                             if (this.gaList.getDataById(key).native.address.match(/\d*\/\d*\/\d*/) && this.gaList.getDataById(key).native.dpt) {
                                 try {
-                                    let dp = new knx.Datapoint({
-                                        ga: this.gaList.getDataById(key).native.address,
-                                        dpt: this.gaList.getDataById(key).native.dpt,
-                                        autoread: this.gaList.getDataById(key).native.autoread // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
-                                    }, this.knxConnection);
+                                    const dp = new knx.Datapoint(
+                                        {
+                                            ga: this.gaList.getDataById(key).native.address,
+                                            dpt: this.gaList.getDataById(key).native.dpt,
+                                            autoread: this.gaList.getDataById(key).native.autoread, // issue a GroupValue_Read request to try to get the initial state from the bus (if any)
+                                        },
+                                        this.knxConnection
+                                    );
                                     this.gaList.setDpById(key, dp);
                                     cnt_withDPT++;
-                                    this.log.debug('Datapoint ' + (this.gaList.getDataById(key).native.autoread ? 'autoread ' : '') +
-                                        'created and GroupValueWrite sent: ' + this.gaList.getDataById(key).native.address + ' ' + key);
+                                    this.log.debug(
+                                        "Datapoint " +
+                                            (this.gaList.getDataById(key).native.autoread ? "autoread " : "") +
+                                            "created and GroupValueWrite sent: " +
+                                            this.gaList.getDataById(key).native.address +
+                                            " " +
+                                            key
+                                    );
                                 } catch (e) {
-                                    this.log.warn('could not create KNX Datapoint for ' + key + ' with error: ' + e);
+                                    this.log.warn("could not create KNX Datapoint for " + key + " with error: " + e);
                                 }
                             } else {
-                                this.log.warn('no match for ' + key);
+                                this.log.warn("no match for " + key);
                             }
                             cnt_complete++;
                         }
                         this.autoreaddone = true;
-                        this.log.info('Found ' + cnt_withDPT + ' valid KNX datapoints of ' + cnt_complete + ' datapoints in adapter.');
+                        this.log.info("Found " + cnt_withDPT + " valid KNX datapoints of " + cnt_complete + " datapoints in adapter.");
                     }
-                    this.setState('info.connection', true, true);
-                    this.log.info('Connected!');
+                    this.setState("info.connection", true, true);
+                    this.log.info("Connected!");
                 },
 
                 disconnected: () => {
-                    this.setState('info.connection', false, true);
-                    if (this.disconnectConfirmed)
-                        this.log.warn('Connection lost');
+                    this.setState("info.connection", false, true);
+                    if (this.disconnectConfirmed) {
+                        this.log.warn("Connection lost");
+                    }
                     this.disconnectConfirmed = true;
                 },
 
                 //KNX Bus event received
-                event: ( /** @type {string} */ evt, /** @type {string} */ src, /** @type {string} */ dest, /** @type {string} */ val) => {
+                event: (/** @type {string} */ evt, /** @type {string} */ src, /** @type {string} */ dest, /** @type {string} */ val) => {
                     if (src == this.config.eibadr) {
                         //called by self, avoid loop
                         //console.log('receive self ga: ', dest);
@@ -325,80 +353,95 @@ class openknx extends utils.Adapter {
 
                     /* some checks */
                     if (!this.gaList.getDpByAddress(dest)) {
-                        this.log.warn('Ignoring ' + evt + ' received on unknown GA: ' + dest);
+                        this.log.warn("Ignoring " + evt + " received on unknown GA: " + dest);
                         return;
                     }
 
-                    let convertedVal = tools.isStringDPT(this.gaList.getDataByAddress(dest).native.dpt) ?
-                        this.gaList.getDpByAddress(dest).current_value :
-                        this.convertType(this.gaList.getDpByAddress(dest).current_value);
+                    const convertedVal = tools.isStringDPT(this.gaList.getDataByAddress(dest).native.dpt)
+                        ? this.gaList.getDpByAddress(dest).current_value
+                        : this.convertType(this.gaList.getDpByAddress(dest).current_value);
 
                     switch (evt) {
-                        case 'GroupValue_Read':
+                        case "GroupValue_Read":
                             //fetch val from addressed object and write on bus if configured to answer
                             this.getForeignState(this.gaList.getIdByAddress(dest), (err, state) => {
-                                this.log.debug('Incoming GroupValue_Read from ' + src + ' to ' + '(' + dest + ') ' + this.gaList.getDataByAddress(dest).common.name);
-                                if (this.gaList.getDataByAddress(dest).native.answer_groupValueResponse) {
-                                    //https://bitbucket.org/ekarak/knx.js/issues/83/send-groupvalue_response
-                                    //workaround, send out a write instead response
-                                    this.knxConnection.write(dest, state.val, this.gaList.getDataByAddress(dest).native.dpt);
-                                    this.log.debug('responding with value ' + state.val);
+                                if (state) {
+                                    this.log.debug("Incoming GroupValue_Read from " + src + " to " + "(" + dest + ") " + this.gaList.getDataByAddress(dest).common.name);
+                                    if (this.gaList.getDataByAddress(dest).native.answer_groupValueResponse) {
+                                        //https://bitbucket.org/ekarak/knx.js/issues/83/send-groupvalue_response
+                                        //workaround, send out a write instead response
+                                        this.knxConnection.write(dest, state.val, this.gaList.getDataByAddress(dest).native.dpt);
+                                        this.log.debug("responding with value " + state.val);
+                                    }
                                 }
                             });
                             break;
 
-                        case 'GroupValue_Response':
+                        case "GroupValue_Response":
                             this.setForeignState(this.gaList.getIdByAddress(dest), {
                                 val: convertedVal,
                                 ack: true,
-                                c: 'self'
+                                c: "self",
                             });
-                            this.log.debug('Incoming GroupValue_Response from ' + src + ' to ' + '(' + dest + ') ' + this.gaList.getDataByAddress(dest).common.name + ': ' + convertedVal);
+                            this.log.debug("Incoming GroupValue_Response from " + src + " to " + "(" + dest + ") " + this.gaList.getDataByAddress(dest).common.name + ": " + convertedVal);
                             break;
 
-                        case 'GroupValue_Write':
+                        case "GroupValue_Write":
                             this.setForeignState(this.gaList.getIdByAddress(dest), {
                                 val: convertedVal,
                                 ack: true,
-                                c: 'self'
+                                c: "self",
                             });
-                            this.log.debug('Incoming GroupValue_Write ga: ' + dest + '  val: ' + convertedVal + ' dpt: ' + this.gaList.getDataByAddress(dest).native.dpt + ' to Object: ' + this.gaList.getIdByAddress(dest));
+                            this.log.debug(
+                                "Incoming GroupValue_Write ga: " +
+                                    dest +
+                                    "  val: " +
+                                    convertedVal +
+                                    " dpt: " +
+                                    this.gaList.getDataByAddress(dest).native.dpt +
+                                    " to Object: " +
+                                    this.gaList.getIdByAddress(dest)
+                            );
                             break;
 
                         default:
-                            this.log.debug('received unhandeled event ' + ' ' + evt + ' ' + src + ' ' + dest + ' ' + convertedVal);
+                            this.log.debug("received unhandeled event " + " " + evt + " " + src + " " + dest + " " + convertedVal);
                     }
-                }
-            }
+                },
+            },
         });
     }
 
     main() {
-        this.log.info('Connecting to knx gateway:  ' + this.config.gwip + ":" + this.config.gwipport + '   with phy. Adr: ' + this.config.eibadr + ' minimum send delay: ' + this.config.frameInterval);
+        this.log.info("Connecting to knx gateway:  " + this.config.gwip + ":" + this.config.gwipport + "   with phy. Adr: " + this.config.eibadr + " minimum send delay: " + this.config.frameInterval);
         this.log.info(utils.controllerDir);
-        this.setState('info.connection', false, true);
+        this.setState("info.connection", false, true);
 
-        //fill gaList object from iobroker objects 
-        this.getObjectView('system', 'state', {
-            startkey: this.mynamespace + '.',
-            endkey: this.mynamespace + '.\u9999',
-            include_docs: true
-        }, (err, res) => {
-            if (err) {
-                this.log.error('Cannot get objects: ' + err);
-            } else if (res) {
-                for (let i = res.rows.length - 1; i >= 0; i--) {
-                    let id = res.rows[i].id;
-                    let value = res.rows[i].value;
-                    if (value && value.native.address != undefined) {
-                        //add only elements from tree that are knx objects, identified by a group adress
-                        this.gaList.set(id, value.native.address, res.rows[i].value);
+        //fill gaList object from iobroker objects
+        this.getObjectView(
+            "system",
+            "state",
+            {
+                startkey: this.mynamespace + ".",
+                endkey: this.mynamespace + ".\u9999",
+                include_docs: true,
+            },
+            (err, res) => {
+                if (err) {
+                    this.log.error("Cannot get objects: " + err);
+                } else if (res) {
+                    for (let i = res.rows.length - 1; i >= 0; i--) {
+                        const id = res.rows[i].id;
+                        const value = res.rows[i].value;
+                        if (value && value.native.address != undefined) {
+                            //add only elements from tree that are knx objects, identified by a group adress
+                            this.gaList.set(id, value.native.address, res.rows[i].value);
+                        }
                     }
+                    this.startKnxStack();
                 }
-                this.startKnxStack();
             }
-        });
-
+        );
     }
 }
 
@@ -442,17 +485,18 @@ class DoubleKeyedMap {
             index: -1,
             data: this.data,
             next() {
-                return (++this.index < this.data.size) ? {
-                    done: false,
-                    value: Array.from(this.data.keys())[this.index]
-                } : {
-                    done: true
-                }
-            }
-        }
+                return ++this.index < this.data.size
+                    ? {
+                          done: false,
+                          value: Array.from(this.data.keys())[this.index],
+                      }
+                    : {
+                          done: true,
+                      };
+            },
+        };
     };
 }
-
 
 if (require.main !== module) {
     // Export the constructor in compact mode
