@@ -17,5 +17,6 @@
     "physical KNX address": "adresse physique KNX",
     "physical KNX address in format a/b/c not valid": "adresse physique KNX au format a/b/c non valide",
     "this is not a number": "ce n'est pas un nombre",
-    "using old knx path for objects": "utiliser l'ancien chemin knx pour les objets"
+    "using old knx path for objects": "utiliser l'ancien chemin knx pour les objets",
+    "using old knx path for objects (Before importing, delete old objects manually)": "en utilisant l'ancien chemin knx pour les objets (Avant d'importer, supprimez les anciens objets manuellement)"
 }

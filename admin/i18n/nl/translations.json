@@ -17,5 +17,6 @@
     "physical KNX address": "fysiek KNX-adres",
     "physical KNX address in format a/b/c not valid": "fysiek KNX-adres in formaat a/b/c niet geldig",
     "this is not a number": "dit is geen nummer",
-    "using old knx path for objects": "oud knx-pad gebruiken voor objecten"
+    "using old knx path for objects": "oud knx-pad gebruiken voor objecten",
+    "using old knx path for objects (Before importing, delete old objects manually)": "het oude knx-pad voor objecten gebruiken (verwijder oude objecten handmatig voordat u ze importeert)"
 }
