@@ -275,6 +275,12 @@
                         }
                     });
                     reader.readAsText(file);
+                } else if (file.name.split(".").pop() == "knxproj") {
+                    showMessage(_("KNXproj are not supported, please open in ETS the Group Adresses and right click on group addresses and then group adresse export"));
+                    $("#onlyAddNewObjects").removeClass("disabled");
+                    $(".file-field .btn").removeClass("disabled");
+                    $(".file-field .file-path").prop("disabled", false);
+                    $("#progress").hide();
                 } else {
                     showMessage(_("Unsupported file format"));
                     $("#onlyAddNewObjects").removeClass("disabled");
@@ -406,6 +412,10 @@
                                 <div class="progress" id="progress">
                                     <div class="indeterminate" style="width: 70%"></div>
                                 </div>
+                            </div>
+                            <div class="col s6 l2 input-field">
+                                <l class="translate">How to export GA XML from ETS:</h6>
+                                <img src="./exportGA.png" alt="exportGA" />
                             </div>
                         </div>
                     </div>
