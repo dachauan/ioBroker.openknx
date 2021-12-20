@@ -81,10 +81,6 @@
                 height: calc(100% - 120px) !important;
             }
 
-            .modal-dialog {
-                color: #fff;
-            }
-
             .modal-header {
                 padding: 16px 16px;
                 color: #fff;
@@ -95,12 +91,6 @@
                 color: #39a1f4 !important;
             }
 
-<<<<<<< HEAD
-        .modal-header {
-            padding: 16px 16px;
-            color: #FFF;
-        }
-=======
             .dialog {
                 width: 100%;
                 height: calc(100% - 64px);
@@ -110,7 +100,6 @@
 
         <script type="text/javascript">
             var knxprojFile = '<input type="file" id="knxprojFile" style="display: inline-block"/>';
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
 
             // This will be called by the admin adapter when the settings page loads
             function load(settings, onChange) {
@@ -203,101 +192,6 @@
                             $("#debugLevel").val(dbgLevel);
                         }
                     });
-<<<<<<< HEAD
-            });
-
-            //if not alive disable buttons
-            getIsAdapterAlive(function (isAlive) {
-                if (isAlive) {
-                    $('#knxprojFile').change(fileHandler);
-                } else {
-                    $('#knxprojFile').prop('disabled', true);
-                    $('.file-field .btn').addClass('disabled');
-                    $('.file-field .file-path').prop('disabled', true);
-                }
-            });
-
-            //start with no changed settings, disable save button
-            onChange(false);
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-        }
-
-        // This will be called by the admin adapter when the user presses the save button
-        function save(callback) {
-            // example: select elements with class=value and build settings object
-            var obj = {};
-            $('.value').each(function () {
-                var $this = $(this);
-                if ($this.attr('type') === 'checkbox') {
-                    obj[$this.attr('id')] = $this.prop('checked');
-                } else if ($this.attr('type') === 'number') {
-                    obj[$this.attr('id')] = parseFloat($this.val());
-                } else {
-                    obj[$this.attr('id')] = $this.val();
-                }
-            });
-            sendTo(null, 'reload', null);
-            callback(obj);
-        }
-
-        function fileHandler(event) {
-            event.preventDefault();
-
-            var file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
-
-            if (!file) {
-                console.warn('invalid file object');
-                return false;
-            }
-
-            $('#knxprojFile').prop('disabled', true);
-            $('.file-field .btn').addClass('disabled');
-            $('.file-field .file-path').prop('disabled', true);
-
-            if (file.name.split('.').pop() == 'xml') {
-                var reader = new FileReader();
-                reader.addEventListener('load', function readFile(event) {
-
-                    transmitXML();
-
-                    function transmitXML() {
-
-                        $('#knxprojFile').replaceWith($(knxprojFile));
-                        $('#knxprojFile').change(fileHandler);
-
-                        showToast(null, _('Import started...'), null, 3000);
-                        $('#progress').show();
-                        $('#onlyAddNewObjects').addClass('disabled');
-                        sendTo(null, 'import', { xml: event.target.result, onlyAddNewObjects: $('#onlyAddNewObjects').prop('checked') }, function (result) {
-                            $('#onlyAddNewObjects').removeClass('disabled');
-                            $('#progress').hide();
-                            if (!result || result.error) {
-                                showMessage(_('Error: ') + (result ? result.error : _('Unknown')));
-                                sendTo(null, 'reset', null);
-                                showToast(null, _('Restarting adapter'), null, 10000);
-                            } else {
-                                showMessage(_('Extracted %s states', result.count));
-                                sendTo(null, 'reset', null);
-                                showToast(null, _('Restarting adapter'), null, 10000);
-                            }
-
-                            $('#knxprojFile').prop('disabled', true);
-                            $('.file-field .btn').addClass('disabled');
-                            $('.file-field .file-path').prop('disabled', true);
-
-                        });
-                    }
-
-                });
-                reader.readAsText(file);
-            } else {
-                showMessage(_('Unsupported file format'));
-                $('#onlyAddNewObjects').removeClass('disabled');
-                $('.file-field .btn').removeClass('disabled');
-                $('.file-field .file-path').prop('disabled', false);
-                $('#progress').hide();
-=======
                 });
 
                 //if not alive disable buttons
@@ -315,7 +209,6 @@
                 onChange(false);
                 // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
                 if (M) M.updateTextFields();
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
             }
 
             // This will be called by the admin adapter when the user presses the save button
@@ -346,23 +239,6 @@
                     return false;
                 }
 
-<<<<<<< HEAD
-        <div id="configDialog" class="dialog">
-            <div class="card">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col s6 l2 input-field">
-                            <input value="127.0.0.1" class="value" id="gwip" type="text" />
-                            <label for="gwip" class="translate">Gateway IP</label>
-                        </div>
-                        <div class="col s6 l2 input-field">
-                            <input type="number" min="1025" max="65535" value="3671" class="value" id="gwipport">
-                            <label for="gwipport" class="translate">Port</label>
-                        </div>
-                        <div class="col s6 l2 input-field">
-                            <input id="frameInterval" class="value" type="number" min="20" max="1000" value="50">
-                            <label for="frameInterval" class="translate">Frames per second</label>
-=======
                 $("#knxprojFile").prop("disabled", true);
                 $(".file-field .btn").addClass("disabled");
                 $(".file-field .file-path").prop("disabled", true);
@@ -385,11 +261,11 @@
                                 if (!result || result.error) {
                                     showMessage(_("Error: ") + (result ? result.error : _("Unknown")));
                                     sendTo(null, "reset", null);
-                                    showToast(null, _("Restarting adapter..."), null, 10000);
+                                    showToast(null, _("Restarting adapter"), null, 10000);
                                 } else {
                                     showMessage(_("Extracted %s states", result.count));
                                     sendTo(null, "reset", null);
-                                    showToast(null, _("Restarting adapter..."), null, 10000);
+                                    showToast(null, _("Restarting adapter"), null, 10000);
                                 }
 
                                 $("#knxprojFile").prop("disabled", true);
@@ -400,7 +276,7 @@
                     });
                     reader.readAsText(file);
                 } else {
-                    showMessage(_("Unsupported format"));
+                    showMessage(_("Unsupported file format"));
                     $("#onlyAddNewObjects").removeClass("disabled");
                     $(".file-field .btn").removeClass("disabled");
                     $(".file-field .file-path").prop("disabled", false);
@@ -467,58 +343,11 @@
     <body>
         <!-- you have to put your config page in a div with id adapter-container -->
         <div class="m adapter-container">
-            <div id="passwordModal" class="modal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">Passwort</div>
-                        <div class="modal-body">
-                            <p style="color: red; font-size: 160%">The project is password protected ! Please remove password from project first.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="modal-action modal-close waves-effect waves-light btn translate" data-dismiss="modal">Cancel</button>
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-<<<<<<< HEAD
-            <div class="card">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col s12 l5 input-field">
-                            <select class="value" id="bind"></select>
-                            <label class="translate" for="bind">local network interface</label>
-                        </div>
-                        <div class="col s12 l2 input-field">
-                            <input value="1.1.1" class="value" id="eibadr" type="text" />
-                            <label for="eibadr" class="translate">physical KNX address</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-content">
-                    <div class="col">
-=======
             <div id="configDialog" class="dialog">
                 <div class="card">
                     <div class="card-content">
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
                         <div class="row">
                             <div class="col s6 l2 input-field">
-<<<<<<< HEAD
-                                <input value="" class="value" id="adapterpath" type="text" />
-                                <label for="adapterpath" class="translate">override object path</label>
-                            </div>
-                        </div>
-                        <div class="col s6">
-                            <div class="file-field input-field">
-                                <div class="btn" id="fileUploadButton">
-                                    <span class="translate">GA XML Export from ETS</span>
-                                    <input type="file" id="knxprojFile">
-=======
                                 <input class="value" id="gwip" type="text" />
                                 <label for="gwip" class="translate">Gateway IP</label>
                             </div>
@@ -528,7 +357,7 @@
                             </div>
                             <div class="col s6 l2 input-field">
                                 <input id="frameInterval" class="value" type="number" min="20" max="1000" />
-                                <label for="frameInterval" class="translate">Frames per sec</label>
+                                <label for="frameInterval" class="translate">Frames per second</label>
                             </div>
                         </div>
                     </div>
@@ -543,7 +372,7 @@
                             </div>
                             <div class="col s12 l2 input-field">
                                 <input class="value" id="eibadr" type="text" />
-                                <label for="eibadr" class="translate">phys. EIB address</label>
+                                <label for="eibadr" class="translate">physical KNX address</label>
                             </div>
                         </div>
                     </div>
@@ -556,18 +385,17 @@
                                 <div class="input-field col s6 m6 l4">
                                     <input class="value" id="onlyAddNewObjects" type="checkbox" />
                                     <label class="translate" for="onlyAddNewObjects">add only new Objects</label>
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
                                 </div>
 
                                 <div class="col s6 l2 input-field">
-                                    <input value="" class="value" id="adapterpath" type="text" />
-                                    <label for="adapterpath" class="translate">Override object path</label>
+                                    <input class="value" id="adapterpath" type="text" />
+                                    <label for="adapterpath" class="translate">override object path</label>
                                 </div>
                             </div>
                             <div class="col s6">
                                 <div class="file-field input-field">
                                     <div class="btn" id="fileUploadButton">
-                                        <span class="translate">knxproj - File</span>
+                                        <span class="translate">GA XML Export from ETS</span>
                                         <input type="file" id="knxprojFile" />
                                     </div>
                                     <div class="file-path-wrapper">
