@@ -16,5 +16,6 @@
     "override object path": "sovrascrivere il percorso dell'oggetto",
     "physical KNX address": "indirizzo fisico KNX",
     "physical KNX address in format a/b/c not valid": "indirizzo fisico KNX in formato a/b/c non valido",
-    "this is not a number": "questo non è un numero"
+    "this is not a number": "questo non è un numero",
+    "using old knx path for objects": "usando il vecchio percorso knx per gli oggetti"
 }

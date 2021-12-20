@@ -16,5 +16,6 @@
     "override object path": "覆盖对象路径",
     "physical KNX address": "物理 KNX 地址",
     "physical KNX address in format a/b/c not valid": "格式为 a/b/c 的物理 KNX 地址无效",
-    "this is not a number": "这不是一个数字"
+    "this is not a number": "这不是一个数字",
+    "using old knx path for objects": "对对象使用旧的 knx 路径"
 }
