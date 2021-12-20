@@ -5,7 +5,6 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.openknx.svg)](https://www.npmjs.com/package/iobroker.openknx)
 ![Number of Installations](https://iobroker.live/badges/openknx-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/openknx-stable.svg)
-[![Dependency Status](https://img.shields.io/david/boellner/iobroker.openknx.svg)](https://david-dm.org/boellner/iobroker.openknx)
 
 [![NPM](https://nodei.co/npm/iobroker.openknx.png?downloads=true)](https://nodei.co/npm/iobroker.openknx/)
 

@@ -20,7 +20,32 @@
             "name": "ioBroker attach",     // Name, der oben im VS Code Debug-Auswahlmenü rechts neben dem grünen Play-Button angezeigt wird
             "address": "127.0.0.1", // Adresse, an dem der node.js Prozess läuft (bei Remote Debug, der Remote-Rechner)
             "port": 9229            // Port, auf dem der node.js Debugger lauscht, der mit "node --inspect-brk ....\main.js --force --logs" gestartet wird
-        }
+        },
+
+        {
+            //https://dev.to/wakeupmh/debugging-mocha-tests-in-vscode-468a
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+              "--require",
+              "esm",
+              "--require",
+              "${workspaceFolder}/your-test-folder/your-setup.js",
+              "--reporter",
+              "dot",
+              "--slow",
+              "5000",
+              "--colors",
+              "${workspaceFolder}/your-test-folder/**/*.spec.js",
+      
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "skipFiles": [
+              "<node_internals>/**"
+            ]
+          },
 
     ]
 }
