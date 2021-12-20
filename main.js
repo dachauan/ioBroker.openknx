@@ -15,19 +15,6 @@ const _ = require("underscore");
 const tools = require("./lib/tools.js");
 
 class openknx extends utils.Adapter {
-<<<<<<< HEAD
-
-    gaList = new DoubleKeyedMap();
-    /*do autoread only adapter startup, not on reconnect*/
-    autoreaddone = false;
-
-    knxConnection;
-    mynamespace;
-    /* knx stack starts connection process with disconnect msg*/
-    disconnectConfirmed = false;
-
-=======
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
      */
@@ -38,7 +25,7 @@ class openknx extends utils.Adapter {
         });
         this.gaList = new DoubleKeyedMap();
         this.autoreaddone = false;
-
+        this.disconnectConfirmed = false;
         /* knx stack starts connection process with disconnect msg*/
         this.disconnectConfirmed = false;
         this.on("ready", this.onReady.bind(this));
@@ -102,7 +89,7 @@ class openknx extends utils.Adapter {
             switch (obj.command) {
                 case "import":
                     this.log.info("Project import...");
-                    projectImport.parseInput(obj.message.xml, (parseError, res) => {
+                    projectImport.parseInput(this, obj.message.xml, (parseError, res) => {
                         if (parseError) {
                             this.log.info("Project import error " + parseError);
                         }
@@ -167,14 +154,10 @@ class openknx extends utils.Adapter {
      * IOBroker Object tree cannot store 2 objects of same name, warn
      */
     warnDuplicates(objects) {
-<<<<<<< HEAD
         let arr = [];
         let duplicates = [];
         let message;
-=======
-        const arr = [];
-        const duplicates = [];
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
+
         for (const object of objects) {
             arr.push(object._id);
         }
@@ -184,16 +167,12 @@ class openknx extends utils.Adapter {
                 duplicates.push(tempArray[i]);
             }
         }
-<<<<<<< HEAD
-        message = 'Object with identical Group Address name not created: ' + duplicates;
-        if (duplicates.length) this.log.warn(message);
-        return duplicates.length ? message : null;
-=======
+
+        message = "Object with identical Group Address name not created: " + duplicates;
         if (duplicates.length) {
-            this.log.warn("Object with duplicate GroupAddress names not created: " + duplicates);
+            this.log.warn(message);
         }
-        return duplicates.length ? "Duplicate GA names" : null;
->>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
+        return duplicates.length ? message : null;
     }
 
     //obj to string and date to number for iobroker, convert to object for knx
@@ -442,10 +421,10 @@ class openknx extends utils.Adapter {
         better approach: send all test values via ets, send received value back from iobroker, compare in ets
     */
     interfaceTest(id, state) {
-        const inpath = this.mynamespace + '.test.testin';
-        const outpath = this.mynamespace + '.test.testout';
+        const inpath = this.mynamespace + ".test.testin";
+        const outpath = this.mynamespace + ".test.testout";
         if (id.startsWith(inpath)) {
-            var out = outpath + id.replace(inpath, '');
+            var out = outpath + id.replace(inpath, "");
             this.setForeignState(out, {
                 val: state.val,
                 ack: true,
