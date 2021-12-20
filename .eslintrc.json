@@ -23,7 +23,7 @@
         "prefer-const": "error",
         "quotes": [
             "error",
-            "double",
+            "single",
             {
                 "avoidEscape": true,
                 "allowTemplateLiterals": true
@@ -32,7 +32,8 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "curly": ["error", "all"]
     },
     "parserOptions": {
         "ecmaVersion": 2018

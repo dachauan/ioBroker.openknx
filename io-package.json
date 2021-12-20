@@ -4,6 +4,7 @@
         "version": "0.1.8",
         "news": {
             "0.1.8": {
+<<<<<<< HEAD
                 "en": "Test Release",
                 "de": "Testfreigabe",
                 "ru": "Тестовый выпуск",
@@ -14,6 +15,9 @@
                 "es": "Lanzamiento de prueba",
                 "pl": "Wersja testowa",
                 "zh-cn": "测试发布"
+=======
+                "en": "Test Release"
+>>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
             }
         },
         "title": "Open KNX",
@@ -30,6 +34,7 @@
             "zh-cn": "Open KNX"
         },
         "desc": {
+<<<<<<< HEAD
             "en": "open source KNX adapter",
             "de": "Open-Source-KNX-Adapter",
             "ru": "адаптер KNX с открытым исходным кодом",
@@ -40,6 +45,18 @@
             "es": "adaptador KNX de código abierto",
             "pl": "otwarty adapter KNX",
             "zh-cn": "开源 KNX 适配器"
+=======
+            "en": "free open-source-adapter for KNX",
+            "de": "kostenloser Open-Source-Adapter für KNX",
+            "ru": "бесплатный open-source-адаптер для KNX",
+            "pt": "adaptador de código aberto gratuito para KNX",
+            "nl": "gratis open-source-adapter voor KNX",
+            "fr": "adaptateur open-source gratuit pour KNX",
+            "it": "adattatore open source gratuito per KNX",
+            "es": "adaptador de código abierto gratuito para KNX",
+            "pl": "darmowy adapter open-source dla KNX",
+            "zh-cn": "KNX 的免费开源适配器"
+>>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
         },
         "authors": [
             "Boellner <boellnerboellner@gmail.com>"
@@ -72,7 +89,19 @@
             "openknx"
         ]
     },
+<<<<<<< HEAD
     "native": {},
+=======
+    "native": {
+        "gwip": "127.0.0.1",
+        "gwipport": "3671",
+        "eibadr": "1.1.1",
+        "bind": "",
+        "frameInterval": 50,
+        "adapterPathActive": false,
+        "adapterpath": ""
+    },
+>>>>>>> e85c5e681700bc50f80d18f6896df774ba98cb37
     "objects": [],
     "instanceObjects": [
         {
