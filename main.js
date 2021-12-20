@@ -49,7 +49,7 @@ class openknx extends utils.Adapter {
         }
 
         //todo nach neuinstallation checken, ga import muss sofort gehen xxx
-        if (this.config.adapterpath && this.config.adapterpath !== "") {
+        if (this.config.adapterpathEnabled && this.config.adapterpath !== "") {
             this.log.info("Adapter path: " + this.config.adapterpath);
             this.mynamespace = this.config.adapterpath;
         }
