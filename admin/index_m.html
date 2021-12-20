@@ -275,6 +275,12 @@
                         }
                     });
                     reader.readAsText(file);
+                } else if (file.name.split(".").pop() == "knxproj") {
+                    showMessage(_("KNXproj are not supported, please open in ETS the Group Adresses and right click on group addresses and then group adresse export"));
+                    $("#onlyAddNewObjects").removeClass("disabled");
+                    $(".file-field .btn").removeClass("disabled");
+                    $(".file-field .file-path").prop("disabled", false);
+                    $("#progress").hide();
                 } else {
                     showMessage(_("Unsupported file format"));
                     $("#onlyAddNewObjects").removeClass("disabled");
@@ -387,9 +393,15 @@
                                     <label class="translate" for="onlyAddNewObjects">add only new Objects</label>
                                 </div>
 
-                                <div class="col s6 l2 input-field">
-                                    <input class="value" id="adapterpath" type="text" />
-                                    <label for="adapterpath" class="translate">override object path</label>
+                                <div class="input-field col s6 m6 l6">
+                                    <div>
+                                        <input class="value" id="adapterpathEnabled" type="checkbox" />
+                                        <label class="translate" for="adapterpathEnabled">using old knx path for objects (Before importing, delete old objects manually)</label>
+                                    </div>
+                                    <div>
+                                        <input class="value" id="adapterpath" type="text" />
+                                        <label for="adapterpath" class="translate">override object path</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col s6">
@@ -406,6 +418,10 @@
                                 <div class="progress" id="progress">
                                     <div class="indeterminate" style="width: 70%"></div>
                                 </div>
+                            </div>
+                            <div class="col s6 l2 input-field">
+                                <h6 class="translate">How to export GA XML from ETS:</h6>
+                                <img src="./exportGA.png" alt="exportGA" />
                             </div>
                         </div>
                     </div>
