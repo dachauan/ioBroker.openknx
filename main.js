@@ -17,6 +17,7 @@ const tools = require('./lib/tools.js');
 class openknx extends utils.Adapter {
 
     gaList = new DoubleKeyedMap();
+    /*do autoread only adapter startup, not on reconnect*/
     autoreaddone = false;
 
     knxConnection;
@@ -150,6 +151,7 @@ class openknx extends utils.Adapter {
     warnDuplicates(objects) {
         let arr = [];
         let duplicates = [];
+        let message;
         for (const object of objects) {
             arr.push(object._id);
         };
@@ -159,8 +161,9 @@ class openknx extends utils.Adapter {
                 duplicates.push(tempArray[i]);
             }
         }
-        if (duplicates.length) this.log.warn('Object with duplicate GroupAddress names not created: ' + duplicates);
-        return duplicates.length ? 'Duplicate GA names' : null;
+        message = 'Object with identical Group Address name not created: ' + duplicates;
+        if (duplicates.length) this.log.warn(message);
+        return duplicates.length ? message : null;
     }
 
     //obj to string and date to number for iobroker, convert to object for knx
@@ -206,7 +209,8 @@ class openknx extends utils.Adapter {
         if (state.c == 'self') {
             //called by self, avoid loop
             //console.log('state change self id: ' + id);
-            //tools.interfaceTest(id, state);
+            //enable this for system testing
+            //this.interfaceTest(id, state);
             return;
         }
 
@@ -371,6 +375,21 @@ class openknx extends utils.Adapter {
                 }
             }
         });
+    }
+
+    /* for testing, forward msg from one to another test address
+        better approach: send all test values via ets, send received value back from iobroker, compare in ets
+    */
+    interfaceTest(id, state) {
+        const inpath = this.mynamespace + '.test.testin';
+        const outpath = this.mynamespace + '.test.testout';
+        if (id.startsWith(inpath)) {
+            var out = outpath + id.replace(inpath, '');
+            this.setForeignState(out, {
+                val: state.val,
+                ack: true,
+            });
+        }
     }
 
     main() {

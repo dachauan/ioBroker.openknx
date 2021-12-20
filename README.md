@@ -213,6 +213,7 @@ Receiving will update the value of the iobroker object in read is set to true.
 ## Changelog
 ### 0.1.8
 * (boellner) feature: skip wrong initial disconnect warning
+* (boellner) feature: add translation
 * (boellner) doc: github ci pipleline, testing
 
 ### 0.1.6

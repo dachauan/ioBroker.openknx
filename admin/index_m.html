@@ -84,10 +84,6 @@
             height: calc(100% - 120px) !important;
         }
 
-        .modal-dialog {
-            color: #FFF;
-        }
-
         .modal-header {
             padding: 16px 16px;
             color: #FFF;
@@ -161,7 +157,7 @@
                             if (ValidateIPaddress(ip1)) {
                                 $('#gwip').val(ip1);
                             } else {
-                                alert("invalid address");
+                                alert("invalid IP address");
                             }
                         }
 
@@ -170,7 +166,7 @@
                             if (ValidatePortaddress(gwipport1)) {
                                 $('#gwipport').val(gwipport1);
                             } else {
-                                alert("invalid portnumber");
+                                alert("invalid port number");
                             }
                         }
 
@@ -179,7 +175,7 @@
                             if (ValidateEIBaddress(eibadr1)) {
                                 $('#eibadr').val(eibadr1);
                             } else {
-                                alert("physical EIB address not valid");
+                                alert("physical KNX address in format a/b/c not valid");
                             }
                         }
 
@@ -189,7 +185,7 @@
                                 if (fI > 0) {
                                     $('#frameInterval').val(fI);
                                 } else {
-                                    alert("min: 1");
+                                    alert("min 1");
                                 }
                             } else {
                                 alert("This is not a number");
@@ -278,11 +274,11 @@
                             if (!result || result.error) {
                                 showMessage(_('Error: ') + (result ? result.error : _('Unknown')));
                                 sendTo(null, 'reset', null);
-                                showToast(null, _('Restarting adapter...'), null, 10000);
+                                showToast(null, _('Restarting adapter'), null, 10000);
                             } else {
                                 showMessage(_('Extracted %s states', result.count));
                                 sendTo(null, 'reset', null);
-                                showToast(null, _('Restarting adapter...'), null, 10000);
+                                showToast(null, _('Restarting adapter'), null, 10000);
                             }
 
                             $('#knxprojFile').prop('disabled', true);
@@ -295,7 +291,7 @@
                 });
                 reader.readAsText(file);
             } else {
-                showMessage(_('Unsupported format'));
+                showMessage(_('Unsupported file format'));
                 $('#onlyAddNewObjects').removeClass('disabled');
                 $('.file-field .btn').removeClass('disabled');
                 $('.file-field .file-path').prop('disabled', false);
@@ -363,24 +359,6 @@
     <!-- you have to put your config page in a div with id adapter-container -->
     <div class="m adapter-container">
 
-        <div id="passwordModal" class="modal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        Passwort
-                    </div>
-                    <div class="modal-body">
-                        <p style="color:red;font-size:160%;">The project is password protected ! Please remove password
-                            from project first.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="modal-action modal-close waves-effect waves-light btn translate"
-                            data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div id="configDialog" class="dialog">
             <div class="card">
                 <div class="card-content">
@@ -395,7 +373,7 @@
                         </div>
                         <div class="col s6 l2 input-field">
                             <input id="frameInterval" class="value" type="number" min="20" max="1000" value="50">
-                            <label for="frameInterval" class="translate">Frames per sec</label>
+                            <label for="frameInterval" class="translate">Frames per second</label>
                         </div>
                     </div>
                 </div>
@@ -410,7 +388,7 @@
                         </div>
                         <div class="col s12 l2 input-field">
                             <input value="1.1.1" class="value" id="eibadr" type="text" />
-                            <label for="eibadr" class="translate">phys. EIB address</label>
+                            <label for="eibadr" class="translate">physical KNX address</label>
                         </div>
                     </div>
                 </div>
@@ -427,13 +405,13 @@
 
                             <div class="col s6 l2 input-field">
                                 <input value="" class="value" id="adapterpath" type="text" />
-                                <label for="adapterpath" class="translate">Override object path</label>
+                                <label for="adapterpath" class="translate">override object path</label>
                             </div>
                         </div>
                         <div class="col s6">
                             <div class="file-field input-field">
                                 <div class="btn" id="fileUploadButton">
-                                    <span class="translate">knxproj - File</span>
+                                    <span class="translate">GA XML Export from ETS</span>
                                     <input type="file" id="knxprojFile">
                                 </div>
                                 <div class="file-path-wrapper">
